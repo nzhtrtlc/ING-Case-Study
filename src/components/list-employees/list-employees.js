@@ -1,6 +1,6 @@
 import { LitElement, html } from 'lit';
 
-class EmployeeList extends LitElement {
+class ListEmployees extends LitElement {
     render() {
         return html`
             <h1>Employee List</h1>
@@ -8,4 +8,4 @@ class EmployeeList extends LitElement {
     }
 }
 
-customElements.define('employee-list', EmployeeList);
+customElements.define('list-employees', ListEmployees);

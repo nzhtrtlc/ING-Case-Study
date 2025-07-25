@@ -72,7 +72,7 @@ export class Navbar extends LitElement {
       </a>
     </li>
     <li>
-      <a href="/add" class="navbar__link">
+      <a href="/add-employee" class="navbar__link">
         <i class="ri-add-line">+</i>
         <span>Add New</span>
       </a>

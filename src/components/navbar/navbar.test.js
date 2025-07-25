@@ -13,7 +13,7 @@ suite('Navbar', () => {
     expect(links.length).to.equal(2);
     expect(links[0].getAttribute('href')).to.equal('/employees');
     expect(links[0].textContent).to.include('Employees');
-    expect(links[1].getAttribute('href')).to.equal('/add');
+    expect(links[1].getAttribute('href')).to.equal('/add-employee');
     expect(links[1].textContent).to.include('Add New');
   });
 

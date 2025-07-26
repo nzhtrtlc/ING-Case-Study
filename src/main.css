@@ -1,9 +1,10 @@
 :root {
     --bg-color: #F8F8F8;
     --primary-color: #FF6200;
-    --secondary-color: #FFD8C0;
+    --secondary-color: #FF681A;
     --text-color: #050A12;
     --text-color-secondary: #787878;
+    --main-font: 'Raleway', Arial, Helvetica, sans-serif;
 }
 
 *,
@@ -28,6 +29,11 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-size: 1rem;
+    font-family: var(--main-font);
+}
+
+main {
+    padding-left: 3rem;
 }
 
 img,

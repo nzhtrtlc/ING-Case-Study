@@ -1,7 +1,6 @@
-import { LitElement, html, css } from 'lit';
+import {LitElement, html, css} from 'lit';
 
 export class Navbar extends LitElement {
-
   static styles = css`
 
     .navbar {
@@ -55,38 +54,44 @@ export class Navbar extends LitElement {
       .navbar__link.active{
         color: var(--primary-color);
       }
-  }`
+  }`;
 
   render() {
     return html`
-        <nav class="navbar" aria-label="Main Navigation">
-  <div class="navbar__left">
-    <img src="/public/assets/images/ing_tr.png" alt="ING Logo" class="navbar__logo" />
-    <span class="navbar__brand">ING</span>
-  </div>
-  <ul class="navbar__menu">
-    <li>
-      <a href="/employees" class="navbar__link active">
-        <i class="ri-user-3-line"></i>
-        Employees
-      </a>
-    </li>
-    <li>
-      <a href="/add-employee" class="navbar__link">
-        <i class="ri-add-line">+</i>
-        <span>Add New</span>
-      </a>
-    </li>
-    <li>
-    <div class="navbar__lang" aria-label="Change Language">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b4/Flag_of_Turkey.svg" alt="Türkçe" />
-    </div>
-    </li>
-  </ul>
-</nav>
-        `;
+      <nav class="navbar" aria-label="Main Navigation">
+        <div class="navbar__left">
+          <img
+            src="/public/assets/images/ing_tr.png"
+            alt="ING Logo"
+            class="navbar__logo"
+          />
+          <span class="navbar__brand">ING</span>
+        </div>
+        <ul class="navbar__menu">
+          <li>
+            <a href="/employees" class="navbar__link active">
+              <i class="ri-user-3-line"></i>
+              Employees
+            </a>
+          </li>
+          <li>
+            <a href="/add-employee" class="navbar__link">
+              <i class="ri-add-line">+</i>
+              <span>Add New</span>
+            </a>
+          </li>
+          <li>
+            <div class="navbar__lang" aria-label="Change Language">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/b/b4/Flag_of_Turkey.svg"
+                alt="Türkçe"
+              />
+            </div>
+          </li>
+        </ul>
+      </nav>
+    `;
   }
 }
-
 
 window.customElements.define('navbar-component', Navbar);

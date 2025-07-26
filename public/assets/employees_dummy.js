@@ -1,4 +1,4 @@
-[
+export default [
   {
     "firstName": "Ali",
     "lastName": "Deniz",

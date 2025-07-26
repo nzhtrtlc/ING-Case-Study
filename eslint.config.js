@@ -37,7 +37,8 @@ export default defineConfig([
     },
     rules: {
       "no-unexpected-multiline": "off",
-      "lit/no-invalid-html": "error"
+      "lit/no-invalid-html": "error",
+      "no-undef": "error"
     }
   },
   {
@@ -47,7 +48,11 @@ export default defineConfig([
         module: "readonly",
         require: "readonly",
         process: "readonly",
-        __dirname: "readonly"
+        __dirname: "readonly",
+        customElements: "readonly"
+      },
+      parserOptions: {
+        sourceType: "module"
       }
     }
   }

@@ -1,6 +1,8 @@
-import {LitElement, html, css} from 'lit';
+import { LitElement, html, css } from 'lit';
 import '../table/table.js';
 import employeeData from '../../../public/assets/employees_dummy.js';
+import '../card/card.js';
+import './grid.js';
 
 class ListEmployees extends LitElement {
   static styles = css`
@@ -12,18 +14,50 @@ class ListEmployees extends LitElement {
       flex-direction: row;
       gap: 1rem;
     }
+    .header_right {
+      display: flex;
+      flex-direction: row;
+      margin-right: 1rem;
+      gap: 1rem;
+    }
+    .header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .employee-card-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .employee-card-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+      gap: 2rem;
+      width: 100%;
+      margin: 0 auto;
+      padding: 1rem 0;
+    }
+
+    @media (max-width: 600px) {
+      .employee-card-list {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+    }
   `;
 
   get columns() {
     return [
-      {key: 'firstName', label: 'First Name'},
-      {key: 'lastName', label: 'Last Name'},
-      {key: 'dateOfEmployment', label: 'Date of Employment'},
-      {key: 'dateOfBirth', label: 'Date of Birth'},
-      {key: 'phone', label: 'Phone'},
-      {key: 'email', label: 'Email'},
-      {key: 'department', label: 'Department'},
-      {key: 'position', label: 'Position'},
+      { key: 'firstName', label: 'First Name' },
+      { key: 'lastName', label: 'Last Name' },
+      { key: 'dateOfEmployment', label: 'Date of Employment' },
+      { key: 'dateOfBirth', label: 'Date of Birth' },
+      { key: 'phone', label: 'Phone' },
+      { key: 'email', label: 'Email' },
+      { key: 'department', label: 'Department' },
+      { key: 'position', label: 'Position' },
       {
         key: 'actions',
         label: 'Actions',
@@ -49,15 +83,35 @@ class ListEmployees extends LitElement {
     ];
   }
 
+  renderMode = 'table';
+
   render() {
     return html`
       <div>
-        <h2>Employee List</h2>
-        <table-component
-          .data=${employeeData}
-          .columns=${this.columns}
-          .pageSize=${7}
-        ></table-component>
+        <div class="header">
+          <h2>Employee List</h2>
+          <div class="header_right">
+            <img width="30" src="/public/assets/icons/block_icon.svg" />
+            <img width="30" src="/public/assets/icons/grid_icon.svg" />
+          </div>
+        </div>
+        ${this.renderMode === 'grid'
+          ? html`
+              <div class="employee-card-list">
+                ${employeeData.map(
+                  (employee) => html`
+                    <card-component>
+                      <grid-component .employee=${employee}></grid-component>
+                    </card-component>
+                  `
+                )}
+              </div>
+            `
+          : html`<table-component
+              .data=${employeeData}
+              .columns=${this.columns}
+              .pageSize=${5}
+            ></table-component>`}
       </div>
     `;
   }

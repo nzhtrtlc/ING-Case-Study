@@ -5,7 +5,7 @@
  */
 
 import summary from 'rollup-plugin-summary';
-import {terser} from 'rollup-plugin-terser';
+import { terser } from 'rollup-plugin-terser';
 import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 
@@ -22,7 +22,7 @@ export default {
   },
   publicPath: '/public',
   plugins: [
-    replace({preventAssignment: false, 'Reflect.decorate': 'undefined'}),
+    replace({ preventAssignment: false, 'Reflect.decorate': 'undefined' }),
     resolve(),
     /**
      * This minification setup serves the static site generation.

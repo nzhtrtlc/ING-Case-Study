@@ -1,4 +1,4 @@
-import { fixture, expect, html, suite, test } from '@open-wc/testing';
+import { fixture, expect, html } from '@open-wc/testing';
 import './navbar.js';
 
 suite('Navbar', () => {
@@ -8,7 +8,7 @@ suite('Navbar', () => {
 
     const nav = el.shadowRoot.querySelector('nav.navbar');
     expect(nav).to.exist;
-    
+
     const links = el.shadowRoot.querySelectorAll('a.navbar__link');
     expect(links.length).to.equal(2);
     expect(links[0].getAttribute('href')).to.equal('/employees');

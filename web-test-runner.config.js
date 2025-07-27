@@ -94,7 +94,7 @@ export default {
   testFramework: {
     // https://mochajs.org/api/mocha
     config: {
-      ui: 'tdd',
+      ui: 'bdd',
       timeout: '60000',
     },
   },

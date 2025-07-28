@@ -147,15 +147,14 @@ class AddEditEmployee extends LitElement {
     const form = this.shadowRoot.querySelector('form');
     form.requestSubmit();
     if (form.checkValidity()) {
-      console.log('form is valid');
-
       const formData = new FormData(form);
-      console.log(Object.fromEntries(formData.entries()));
-    } else {
-      console.log('form is invalid');
-      return;
+      const formObjectWithoutId = Object.fromEntries(formData.entries().filter(([key, _]) => key !== 'id'));
+      employeeStore.getState().addEmployee(formObjectWithoutId);
+      alert('Employee added successfully');
+      window.location.reload();
+      window.location.replace('/add-edit-employee');
+      
     }
-    //employeeStore.getState().addEmployee(employee);
   }
 
   render() {
@@ -164,7 +163,7 @@ class AddEditEmployee extends LitElement {
         <div class="header">
           <h2>${this.isEditing ? 'Edit Employee' : 'Add Employee'}</h2>
         </div>
-        <form class="form" @submit=${this.handleSubmit}>
+        <form class="form" @submit=${e => e.preventDefault()}>
           <input-component>
             <label slot="label">First Name</label>
             <input
@@ -277,7 +276,7 @@ class AddEditEmployee extends LitElement {
               name="save"
               label=${this.isEditing ? 'Update' : 'Save'}
               variant="primary"
-              type="submit"
+              type="button"
               @click=${this.isEditing ? this.updateEmployee : this.addEmployee}
             ></button-component>
             <button-component

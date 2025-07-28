@@ -13,12 +13,12 @@ router.setRoutes([
   {
     path: '/',
     component: 'list-employees',
-    action: loadEmployeeList()
+    action: loadEmployeeList(),
   },
   {
     path: '/employees',
     component: 'list-employees',
-    action: loadEmployeeList()
+    action: loadEmployeeList(),
   },
   {
     path: '/add-employee',

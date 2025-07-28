@@ -124,7 +124,7 @@ class AddEditEmployee extends LitElement {
   firstUpdated() {
     const employeeId = this.getIdParam();
     if (employeeId) {
-      this.title = 'Edit Employee';
+      this.title = t('editEmployee');
       this.employee = employeeStore
         .getState()
         .employees.find((employee) => employee.id === employeeId);
@@ -171,10 +171,10 @@ class AddEditEmployee extends LitElement {
 
   async updateEmployee() {
     const confirm = await showDialog({
-      title: 'Update Employee',
-      message: 'Are you sure you want to update this employee?',
-      confirmText: 'Yes, Update',
-      cancelText: 'No',
+      title: t('updateEmployeeTitle'),
+      message: t('areYouSureYouWantToUpdateThisEmployee'),
+      confirmText: t('update'),
+      cancelText: t('no'),
     });
     if (confirm) {
       const updatedEmployeeData = this.getFormData();
@@ -188,10 +188,10 @@ class AddEditEmployee extends LitElement {
     form.requestSubmit();
     if (form.checkValidity()) {
       const confirm = await showDialog({
-        title: 'Add Employee',
-        message: 'Are you sure you want to add this employee?',
-        confirmText: 'Yes, Add',
-        cancelText: 'No',
+        title: t('addEmployee'),
+        message: t('areYouSureYouWantToAddThisEmployee'),
+        confirmText: t('save'),
+        cancelText: t('no'),
       });
       if (confirm) {
         const formData = new FormData(form);
@@ -325,14 +325,14 @@ class AddEditEmployee extends LitElement {
           <div class="actions">
             <button-component
               name="save"
-              label=${this.isEditing ? 'Update' : 'Save'}
+              label=${this.isEditing ? t('update') : t('save')}
               variant="primary"
               type="button"
               @click=${this.isEditing ? this.updateEmployee : this.addEmployee}
             ></button-component>
             <button-component
               name="cancel"
-              label="Cancel"
+              label=${t('cancel')}
               variant="secondary"
               @click=${this.#handleCancel}
             ></button-component>

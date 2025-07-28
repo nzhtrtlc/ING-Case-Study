@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import '../input/input.js';
+import '../pagination/pagination.js';
 
 class Table extends LitElement {
   static properties = {
@@ -8,6 +9,7 @@ class Table extends LitElement {
     pageSize: { type: Number },
     currentPage: { type: Number },
     searchValue: { type: String },
+    pagedRows: { type: Array, state: true },
   };
 
   static styles = css`
@@ -72,96 +74,63 @@ class Table extends LitElement {
     this.pageSize = 5;
     this.currentPage = 1;
     this.searchValue = '';
+    this.pagedRows = [];
   }
-
   connectedCallback() {
     super.connectedCallback();
-    const urlParams = new URLSearchParams(window.location.search);
-    this.searchValue = urlParams.get('search') || '';
+    const params = new URLSearchParams(window.location.search);
+    this.searchValue = params.get('search') || '';
+    this.currentPage = 1;
+    this._syncPagedRows();
   }
 
-  updateUrl() {
-    const params = new URLSearchParams();
-    if (this.searchValue) params.set('search', this.searchValue);
-    const newUrl =
-      window.location.pathname +
-      (params.toString() ? '?' + params.toString() : '');
-    window.history.replaceState({}, '', newUrl);
-  }
-
-  handleSearch(e) {
-    const newVal = e.detail?.value ?? e.target?.value ?? '';
-    this.searchValue = newVal;
-    this.currentPage = 1; // Reset to first page when searching
-    this.updateUrl();
-  }
-
-  goToPage(page) {
-    // currentPage cannot be less than 1 or greater than totalPages.
-    if (page < 1 || page > this.totalPages) return;
-
-    this.currentPage = page;
+  updated(changed) {
+    // update pageRows when searchValue, data or currentPage changes.
+    if (
+      changed.has('searchValue') ||
+      changed.has('data') ||
+      changed.has('currentPage')
+    ) {
+      this.currentPage = Math.min(this.currentPage, this.totalPages || 1);
+      this._syncPagedRows();
+    }
   }
 
   get filteredData() {
     if (!this.searchValue) return this.data;
+    const q = this.searchValue.toLowerCase();
     return this.data.filter((item) =>
-      this.columns.some((column) => {
-        const value = item[column.key];
-        return (
-          value &&
-          value
-            .toString()
-            .toLowerCase()
-            .includes(this.searchValue.toLowerCase())
-        );
+      this.columns.some((col) => {
+        const v = item[col.key];
+        return v != null && v.toString().toLowerCase().includes(q);
       })
     );
-  }
-
-  get pagedData() {
-    const start = (this.currentPage - 1) * this.pageSize;
-    return this.filteredData.slice(start, start + this.pageSize);
   }
 
   get totalPages() {
     return Math.ceil(this.filteredData.length / this.pageSize);
   }
-  get paginationButtons() {
-    const totalPageCount = this.totalPages;
-    const currentPage = this.currentPage;
-    const maxVisiblePages = 5; // render first 5, inside pagination buttons.
 
-    if (totalPageCount <= maxVisiblePages) {
-      return Array.from({ length: totalPageCount }, (_, i) => i + 1);
-    }
+  _syncPagedRows() {
+    const start = (this.currentPage - 1) * this.pageSize;
+    this.pagedRows = this.filteredData.slice(start, start + this.pageSize);
+  }
 
-    const pages = [];
+  handleSearch(e) {
+    this.searchValue = e.detail?.value ?? e.target?.value ?? '';
+    this.currentPage = 1;
+    // URL'yi güncelle
+    const params = new URLSearchParams();
+    if (this.searchValue) params.set('search', this.searchValue);
+    window.history.replaceState(
+      {},
+      '',
+      window.location.pathname + (params.toString() ? `?${params}` : '')
+    );
+  }
 
-    const addRange = (start, end) => {
-      for (let i = start; i <= end; i++) pages.push(i);
-    };
-
-    const firstRange = currentPage < maxVisiblePages;
-    const lastRange = totalPageCount - currentPage < maxVisiblePages;
-
-    if (firstRange) {
-      addRange(1, maxVisiblePages);
-      pages.push('...');
-      pages.push(totalPageCount);
-    } else if (lastRange) {
-      pages.push(1);
-      pages.push('...');
-      addRange(totalPageCount - maxVisiblePages + 1, totalPageCount);
-    } else {
-      pages.push(1);
-      pages.push('...');
-      addRange(currentPage - 2, currentPage + 2);
-      pages.push('...');
-      pages.push(totalPageCount);
-    }
-
-    return pages;
+  handlePageChange(e) {
+    this.currentPage = e.detail.page; // yeni sayfayı al
   }
 
   render() {
@@ -169,41 +138,32 @@ class Table extends LitElement {
       <div class="search-container">
         <input-component>
           <input
-          slot="control"
+            slot="control"
             .value=${this.searchValue}
             @input=${this.handleSearch}
             type="text"
+            placeholder="Search..."
           />
-          <svg
-            slot="icon"
-            width="24"
-            height="24"
-            fill="none"
-            stroke="#ff6600"
-            stroke-width="2"
-            viewBox="0 0 24 24"
-          >
-            <circle cx="11" cy="11" r="7" />
-            <line x1="16" y1="16" x2="21" y2="21" />
-          </svg>
+          <slot name="search-icon"></slot>
         </input-component>
       </div>
+
       <table>
         <thead>
           <tr>
             ${this.columns.map(
-              (column) => html`<th scope="col">${column.label}</th>`
+              (col) => html`<th scope="col">${col.label}</th>`
             )}
           </tr>
         </thead>
         <tbody>
-          ${this.pagedData.length > 0
-            ? this.pagedData.map(
+          ${this.pagedRows.length
+            ? this.pagedRows.map(
                 (row) => html`<tr>
-                  ${this.columns.map((column) =>
-                    column.render
-                      ? column.render(row)
-                      : html`<td>${row[column.key]}</td>`
+                  ${this.columns.map((col) =>
+                    col.render
+                      ? col.render(row)
+                      : html`<td>${row[col.key]}</td>`
                   )}
                 </tr>`
               )
@@ -214,34 +174,13 @@ class Table extends LitElement {
               </tr>`}
         </tbody>
       </table>
-      ${this.pagedData.length > 1
-        ? html`<div class="pagination">
-            <button
-              ?disabled=${this.currentPage === 1}
-              @click=${() => this.goToPage(this.currentPage - 1)}
-            >
-              Prev
-            </button>
-            ${this.paginationButtons.map((page) =>
-              page === '...'
-                ? html`<span class="ellipsis">...</span>`
-                : html`
-                    <button
-                      class=${this.currentPage === page ? 'active' : ''}
-                      @click=${() => this.goToPage(page)}
-                    >
-                      ${page}
-                    </button>
-                  `
-            )}
-            <button
-              ?disabled=${this.currentPage === this.totalPages}
-              @click=${() => this.goToPage(this.currentPage + 1)}
-            >
-              Next
-            </button>
-          </div>`
-        : null}
+
+      <pagination-component
+        .data=${this.filteredData}
+        .pageSize=${this.pageSize}
+        .currentPage=${this.currentPage}
+        @onPageChange=${this.handlePageChange}
+      ></pagination-component>
     `;
   }
 }

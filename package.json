@@ -33,7 +33,8 @@
   "dependencies": {
     "@open-wc/lit-helpers": "^0.7.0",
     "@vaadin/router": "^2.0.0",
-    "lit": "^3.2.0"
+    "lit": "^3.2.0",
+    "zustand": "^5.0.6"
   },
   "devDependencies": {
     "@11ty/eleventy": "^1.0.1",

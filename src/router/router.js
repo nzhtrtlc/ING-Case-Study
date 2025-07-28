@@ -6,7 +6,7 @@ const router = new Router(outlet);
 
 const loadEmployeeList = () =>
   import('../components/list-employees/list-employees.js');
-const loadAddEmployee = () =>
+const loadAddEditEmployee = () =>
   import('../components/add-edit-employee/add-edit-employee.js');
 
 router.setRoutes([
@@ -21,9 +21,9 @@ router.setRoutes([
     action: loadEmployeeList(),
   },
   {
-    path: '/add-employee',
-    action: loadAddEmployee,
-    component: 'add-employee',
+    path: '/add-edit-employee',
+    action: loadAddEditEmployee,
+    component: 'add-edit-employee',
   },
 ]);
 

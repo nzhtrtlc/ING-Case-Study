@@ -82,13 +82,14 @@ class Input extends LitElement {
         detail: { value: e.target.value },
         bubbles: true,
         composed: true,
-      }),
+      })
     );
   }
 
   render() {
     return html`
       <div class="input-box">
+        <slot name="label"></slot>
         <slot name="control"></slot>
         <span class="icon-slot">
           <slot name="icon"></slot>

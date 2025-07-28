@@ -1,18 +1,12 @@
 import { LitElement, html, css } from 'lit';
 import '../table/table.js';
-import employeeData from '../../../public/assets/employees_dummy.js';
-import '../card/card.js';
 import './grid.js';
+import { employeeStore } from '../../store/employee.js';
 
 class ListEmployees extends LitElement {
   static styles = css`
     h2 {
       color: var(--primary-color);
-    }
-    .actions {
-      display: flex;
-      flex-direction: row;
-      gap: 1rem;
     }
     .header_right {
       display: flex;
@@ -48,6 +42,20 @@ class ListEmployees extends LitElement {
     }
   `;
 
+  static properties = {
+    employees: { type: Array },
+    displayMode: { type: String, state: true },
+  };
+
+  constructor() {
+    super();
+    this.displayMode = 'grid';
+    this.employees = employeeStore.getState().employees;
+    employeeStore.subscribe((state) => {
+      this.employees = state.employees;
+    });
+  }
+
   get columns() {
     return [
       { key: 'firstName', label: 'First Name' },
@@ -63,18 +71,26 @@ class ListEmployees extends LitElement {
         label: 'Actions',
         render: (row) => html`
           <td>
-            <div class="actions">
-              <img
-                width="20"
-                height="20"
-                src="/public/assets/icons/edit_icon.svg"
-                @click=${() => alert('Edit ' + row.firstName)}
-              />
+            <div
+              class="actions"
+              style="display: flex; flex-direction: row; gap: 1rem;"
+            >
+              <a
+                href="/add-edit-employee?id=${row.id}"
+                style="text-decoration: none;"
+              >
+                <img
+                  width="20"
+                  height="20"
+                  src="/public/assets/icons/edit_icon.svg"
+                />
+              </a>
               <img
                 width="20"
                 height="20"
                 src="/public/assets/icons/trash_icon.svg"
                 @click=${() => alert('Delete ' + row.position)}
+                style="cursor: pointer;"
               />
             </div>
           </td>
@@ -83,9 +99,8 @@ class ListEmployees extends LitElement {
     ];
   }
 
-  renderMode = 'table';
-
   render() {
+    console.log('employees', this.employees);
     return html`
       <div>
         <div class="header">
@@ -95,22 +110,11 @@ class ListEmployees extends LitElement {
             <img width="30" src="/public/assets/icons/grid_icon.svg" />
           </div>
         </div>
-        ${this.renderMode === 'grid'
-          ? html`
-              <div class="employee-card-list">
-                ${employeeData.map(
-                  (employee) => html`
-                    <card-component>
-                      <grid-component .employee=${employee}></grid-component>
-                    </card-component>
-                  `
-                )}
-              </div>
-            `
+        ${this.displayMode === 'grid'
+          ? html` <grid-component .data=${this.employees}></grid-component> `
           : html`<table-component
-              .data=${employeeData}
+              .data=${this.employees}
               .columns=${this.columns}
-              .pageSize=${5}
             ></table-component>`}
       </div>
     `;

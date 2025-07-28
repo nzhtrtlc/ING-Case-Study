@@ -1,8 +1,10 @@
 import { LitElement, html, css } from 'lit';
 import '../button/button.js';
 import '../input/input.js';
+import { employeeStore } from '../../store/employee.js';
+import { DMYtoIso, isoToDMY } from '../../utils/date.js';
 
-class AddEmployee extends LitElement {
+class AddEditEmployee extends LitElement {
   static styles = css`
     h2 {
       color: var(--primary-color);
@@ -49,22 +51,9 @@ class AddEmployee extends LitElement {
     }
   `;
 
-  handleSubmit(e) {
-    e.preventDefault();
-
-    const form = this.shadowRoot.querySelector('form');
-    form.requestSubmit();
-    if (form.checkValidity()) {
-      console.log('form is valid');
-
-      const formData = new FormData(form);
-      console.log(Object.fromEntries(formData.entries()));
-    } else {
-      console.log('form is invalid');
-      return;
-    }
-    // console.log('form', form.checkValidity());
-  }
+  static properties = {
+    employee: { type: Object },
+  };
 
   dateIcon = html`
     <svg
@@ -85,100 +74,175 @@ class AddEmployee extends LitElement {
     </svg>
   `;
 
+  getIdParam() {
+    return new URLSearchParams(window.location.search).get('id');
+  }
+
+  firstUpdated() {
+    const employeeId = this.getIdParam();
+    if (employeeId) {
+      console.log('employeeId', employeeId);
+      this.title = 'Edit Employee';
+      this.employee = employeeStore
+        .getState()
+        .employees.find((employee) => employee.id === employeeId);
+      console.log('found employee', this.employee);
+    }
+  }
+
+  getFormData() {
+    const form = this.shadowRoot.querySelector('form');
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    // find dates and convert to dd-mm-yyyy format.
+    Array.from(form.elements)
+      .filter((el) => el instanceof HTMLInputElement && el.type === 'date')
+      .forEach((input) => {
+        console.log('input', input);
+        const name = input.name;
+        const dateObject = data[name];
+        if (dateObject) {
+          data[name] = isoToDMY(dateObject);
+        }
+      });
+    return data;
+  }
+
+  updateEmployee() {
+    const updatedEmployeeData = this.getFormData();
+    console.log('updatedEmployeeData', updatedEmployeeData);
+    employeeStore.getState().updateEmployee(updatedEmployeeData);
+    alert('Employee updated successfully');
+  }
+
+  addEmployee(e) {
+    e.preventDefault();
+    const form = this.shadowRoot.querySelector('form');
+    form.requestSubmit();
+    if (form.checkValidity()) {
+      console.log('form is valid');
+
+      const formData = new FormData(form);
+      console.log(Object.fromEntries(formData.entries()));
+    } else {
+      console.log('form is invalid');
+      return;
+    }
+    //employeeStore.getState().addEmployee(employee);
+  }
+
   render() {
+    const isEditing = !!this.getIdParam();
     return html`
       <div class="add-edit-employee">
         <div class="header">
-          <h2>Add Employee</h2>
+          <h2>${isEditing ? 'Edit Employee' : 'Add Employee'}</h2>
         </div>
         <form class="form" @submit=${this.handleSubmit}>
           <input-component>
+            <label slot="label">First Name</label>
             <input
               required
               slot="control"
               type="text"
               name="firstName"
               placeholder="First Name"
-              value="John"
+              value=${this.employee?.firstName || ''}
             />
           </input-component>
           <input-component>
+            <label slot="label">Last Name</label>
             <input
               required
               slot="control"
               type="text"
               name="lastName"
               placeholder="Last Name"
-              value="Doe"
+              value=${this.employee?.lastName || ''}
             />
           </input-component>
           <input-component>
+            <label slot="label">Date of Employment</label>
             <input
               required
               slot="control"
               type="date"
               name="dateOfEmployment"
               placeholder="Date of Employment"
-              value="2022-01-01"
+              value=${DMYtoIso(this.employee?.dateOfEmployment)}
             />
           </input-component>
           <input-component>
+            <label slot="label">Date of Birth</label>
             <input
               required
               slot="control"
               type="date"
               name="dateOfBirth"
               placeholder="Date of Birth"
-              value="1990-01-01"
+              value=${DMYtoIso(this.employee?.dateOfBirth)}
             />
           </input-component>
           <input-component>
+            <label slot="label">Phone</label>
             <input
               required
               slot="control"
               type="text"
               name="phone"
               placeholder="Phone"
-              value="+90 555 123 45 67"
+              value=${this.employee?.phone || ''}
             />
           </input-component>
           <input-component>
+            <label slot="label">Email</label>
             <input
               required
               slot="control"
               type="email"
               name="email"
               placeholder="Email"
-              value="john.doe@example.com"
+              value=${this.employee?.email || ''}
             />
           </input-component>
           <input-component>
+            <label slot="label">Department</label>
             <input
               required
               slot="control"
               type="text"
               name="department"
               placeholder="Department"
-              value="IT"
+              value=${this.employee?.department || ''}
             />
           </input-component>
           <input-component>
+            <label slot="label">Position</label>
             <input
               required
               slot="control"
               type="text"
               name="position"
               placeholder="Position"
-              value="Senior"
+              value=${this.employee?.position || ''}
+            />
+          </input-component>
+          <input-component>
+            <input
+              type="hidden"
+              slot="control"
+              name="id"
+              value=${this.employee?.id || ''}
             />
           </input-component>
           <div class="actions">
             <button-component
               name="save"
-              label="Save"
+              label=${isEditing ? 'Update' : 'Save'}
               variant="primary"
               type="submit"
-              @click=${this.handleSubmit}
+              @click=${isEditing ? this.updateEmployee : this.addEmployee}
             ></button-component>
             <button-component
               name="cancel"
@@ -192,4 +256,4 @@ class AddEmployee extends LitElement {
   }
 }
 
-customElements.define('add-employee', AddEmployee);
+customElements.define('add-edit-employee', AddEditEmployee);

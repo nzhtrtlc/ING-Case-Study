@@ -2,7 +2,10 @@ import { LitElement, html, css } from 'lit';
 
 export class GridComponent extends LitElement {
   static properties = {
-    employee: { type: Object },
+    data: { type: Array },
+    pagedRows: { state: true },
+    pageSize: { type: Number },
+    currentPage: { type: Number },
   };
 
   static styles = css`
@@ -93,6 +96,33 @@ export class GridComponent extends LitElement {
     }
   `;
 
+  constructor() {
+    super();
+    this.data = [];
+    this.pageSize = 5;
+    this.currentPage = 1;
+    this.pagedRows = [];
+  }
+  updated(changed) {
+    if (
+      changed.has('data') ||
+      changed.has('pageSize') ||
+      changed.has('currentPage')
+    ) {
+      this._syncPagedRows();
+    }
+  }
+
+  // Slice data according to current page
+  _syncPagedRows() {
+    const start = (this.currentPage - 1) * this.pageSize;
+    this.pagedRows = this.data.slice(start, start + this.pageSize);
+  }
+
+  handlePageChange(e) {
+    this.currentPage = e.detail.page;
+  }
+
   editEmployee() {
     // TODO: navigate add-edit-employee
   }
@@ -101,8 +131,7 @@ export class GridComponent extends LitElement {
     // TODO: Implement delete employee
   }
 
-  render() {
-    const e = this.employee || {};
+  #renderEmployee(e) {
     return html`
       <div class="employee-grid">
         <div class="employee-field">
@@ -146,6 +175,18 @@ export class GridComponent extends LitElement {
           </button>
         </div>
       </div>
+    `;
+  }
+
+  render() {
+    return html`
+      ${this.pagedRows.map((employee) => this.#renderEmployee(employee))}
+      <pagination-component
+        .data=${this.data}
+        .pageSize=${this.pageSize}
+        .currentPage=${this.currentPage}
+        @onPageChange=${this.handlePageChange}
+      ></pagination-component>
     `;
   }
 }

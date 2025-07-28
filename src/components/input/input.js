@@ -1,5 +1,4 @@
 import { LitElement, html, css } from 'lit';
-import { spread } from '@open-wc/lit-helpers';
 
 class Input extends LitElement {
   static styles = css`
@@ -7,7 +6,7 @@ class Input extends LitElement {
       position: relative;
       width: 350px;
     }
-    .input-box input {
+    ::slotted([slot='control']) {
       width: 100%;
       padding: 10px;
       border: 1.5px solid #e0e0e0;
@@ -20,15 +19,16 @@ class Input extends LitElement {
       box-sizing: border-box;
       transition: border-color 0.2s;
     }
-    .input-box input::placeholder {
+    ::slotted([slot='control']::placeholder) {
       color: #bdbdbd;
     }
-    .input-box input:focus {
+    :host(:focus-within) ::slotted([slot='control']) {
       border-color: #ff6600;
     }
+    /* Icon slot */
     .icon-slot {
       position: absolute;
-      right: 16px;
+      right: 25px;
       top: 50%;
       transform: translateY(-50%);
       display: flex;
@@ -39,44 +39,57 @@ class Input extends LitElement {
 
   static properties = {
     value: { type: String, reflect: true },
-    placeholder: { type: String },
-    type: { type: String },
-    name: { type: String },
-    inputProps: { type: Object },
   };
 
   constructor() {
     super();
     this.value = '';
-    this.placeholder = '';
-    this.type = 'text';
-    this.name = '';
-    this.inputProps = {};
+    this._onInput = this._onInput.bind(this);
+  }
+  connectedCallback() {
+    super.connectedCallback();
+    this.addEventListener('input', this._onInput);
   }
 
-  handleInput(e) {
-    const newValue = e.target.value;
-    this.value = newValue;
+  disconnectedCallback() {
+    this.removeEventListener('input', this._onInput);
+    super.disconnectedCallback();
+  }
+
+  _onInput(e) {
+    const target = e.target;
+    if (target.slot === 'control' && target instanceof HTMLInputElement) {
+      this.value = target.value;
+      this.dispatchEvent(
+        new CustomEvent('input-changed', {
+          detail: { value: this.value },
+          bubbles: true,
+          composed: true,
+        })
+      );
+    }
+  }
+
+  _wire() {
+    const native = this.querySelector('slot[name="control"]');
+    native.addEventListener('input', this._onInput.bind(this));
+    native.addEventListener('change', this._onChange.bind(this));
+  }
+
+  _onChange(e) {
     this.dispatchEvent(
-      new CustomEvent('input-changed', {
-        detail: { value: newValue },
+      new CustomEvent('input-change', {
+        detail: { value: e.target.value },
         bubbles: true,
         composed: true,
-      })
+      }),
     );
   }
 
   render() {
     return html`
       <div class="input-box">
-        <input
-          .value=${this.value}
-          .placeholder=${this.placeholder}
-          .type=${this.type}
-          .name=${this.name}
-          @input=${this.handleInput}
-          ...=${spread(this.inputProps)}
-        />
+        <slot name="control"></slot>
         <span class="icon-slot">
           <slot name="icon"></slot>
         </span>

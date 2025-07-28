@@ -90,9 +90,17 @@ class Table extends LitElement {
   }
 
   handleSearch(e) {
-    this.searchValue = e.detail.value;
-    this.currentPage = 1;
+    const newVal = e.detail?.value ?? e.target?.value ?? '';
+    this.searchValue = newVal;
+    this.currentPage = 1; // Reset to first page when searching
     this.updateUrl();
+  }
+
+  goToPage(page) {
+    // currentPage cannot be less than 1 or greater than totalPages.
+    if (page < 1 || page > this.totalPages) return;
+
+    this.currentPage = page;
   }
 
   get filteredData() {
@@ -119,14 +127,6 @@ class Table extends LitElement {
   get totalPages() {
     return Math.ceil(this.filteredData.length / this.pageSize);
   }
-
-  goToPage(page) {
-    // currentPage cannot be less than 1 or greater than totalPages.
-    if (page < 1 || page > this.totalPages) return;
-
-    this.currentPage = page;
-  }
-
   get paginationButtons() {
     const totalPageCount = this.totalPages;
     const currentPage = this.currentPage;
@@ -167,12 +167,15 @@ class Table extends LitElement {
   render() {
     return html`
       <div class="search-container">
-        <input-component
-          .value=${this.searchValue}
-          @input-changed=${this.handleSearch}
-        >
-        <svg
-        slot="icon"
+        <input-component>
+          <input
+          slot="control"
+            .value=${this.searchValue}
+            @input=${this.handleSearch}
+            type="text"
+          />
+          <svg
+            slot="icon"
             width="24"
             height="24"
             fill="none"
@@ -183,7 +186,7 @@ class Table extends LitElement {
             <circle cx="11" cy="11" r="7" />
             <line x1="16" y1="16" x2="21" y2="21" />
           </svg>
-      </input-component>
+        </input-component>
       </div>
       <table>
         <thead>

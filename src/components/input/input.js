@@ -1,13 +1,13 @@
 import { LitElement, html, css } from 'lit';
+import { spread } from '@open-wc/lit-helpers';
 
 class Input extends LitElement {
   static styles = css`
-    .search-box {
+    .input-box {
       position: relative;
       width: 350px;
     }
-
-    .search-box input[type='text'] {
+    .input-box input {
       width: 100%;
       padding: 10px;
       border: 1.5px solid #e0e0e0;
@@ -20,16 +20,13 @@ class Input extends LitElement {
       box-sizing: border-box;
       transition: border-color 0.2s;
     }
-
-    .search-box input[type='text']::placeholder {
+    .input-box input::placeholder {
       color: #bdbdbd;
     }
-
-    .search-box input[type='text']:focus {
+    .input-box input:focus {
       border-color: #ff6600;
     }
-
-    .search-icon {
+    .icon-slot {
       position: absolute;
       right: 16px;
       top: 50%;
@@ -42,19 +39,26 @@ class Input extends LitElement {
 
   static properties = {
     value: { type: String, reflect: true },
+    placeholder: { type: String },
+    type: { type: String },
+    name: { type: String },
+    inputProps: { type: Object },
   };
 
   constructor() {
     super();
-    this.value = this.value || '';
+    this.value = '';
+    this.placeholder = '';
+    this.type = 'text';
+    this.name = '';
+    this.inputProps = {};
   }
 
   handleInput(e) {
     const newValue = e.target.value;
     this.value = newValue;
-
     this.dispatchEvent(
-      new CustomEvent('search-changed', {
+      new CustomEvent('input-changed', {
         detail: { value: newValue },
         bubbles: true,
         composed: true,
@@ -64,25 +68,17 @@ class Input extends LitElement {
 
   render() {
     return html`
-      <div class="search-box">
+      <div class="input-box">
         <input
-          type="text"
-          placeholder="Ara..."
           .value=${this.value}
+          .placeholder=${this.placeholder}
+          .type=${this.type}
+          .name=${this.name}
           @input=${this.handleInput}
+          ...=${spread(this.inputProps)}
         />
-        <span class="search-icon">
-          <svg
-            width="24"
-            height="24"
-            fill="none"
-            stroke="#ff6600"
-            stroke-width="2"
-            viewBox="0 0 24 24"
-          >
-            <circle cx="11" cy="11" r="7" />
-            <line x1="16" y1="16" x2="21" y2="21" />
-          </svg>
+        <span class="icon-slot">
+          <slot name="icon"></slot>
         </span>
       </div>
     `;

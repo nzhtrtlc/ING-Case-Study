@@ -169,8 +169,21 @@ class Table extends LitElement {
       <div class="search-container">
         <input-component
           .value=${this.searchValue}
-          @search-changed=${this.handleSearch}
-        ></input-component>
+          @input-changed=${this.handleSearch}
+        >
+        <svg
+        slot="icon"
+            width="24"
+            height="24"
+            fill="none"
+            stroke="#ff6600"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <circle cx="11" cy="11" r="7" />
+            <line x1="16" y1="16" x2="21" y2="21" />
+          </svg>
+      </input-component>
       </div>
       <table>
         <thead>

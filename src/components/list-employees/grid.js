@@ -9,89 +9,167 @@ export class GridComponent extends LitElement {
   };
 
   static styles = css`
+    .employee-card-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      width: 100%;
+      padding: 0.5rem 0;
+    }
+
     .employee-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.2rem 2rem;
+      grid-template-columns: 1fr;
+      gap: 1rem;
       width: 100%;
       background-color: #fff;
       border-radius: 0.7rem;
       box-shadow: 0 0 0.6rem 0 rgba(0, 0, 0, 0.08);
-      padding: 1.5rem 1.2rem 1.2rem 1.2rem;
+      padding: 1rem;
       box-sizing: border-box;
     }
+
     .employee-field {
       display: flex;
       flex-direction: column;
       min-width: 0;
     }
+
     .label {
       color: #b3ada7;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: 500;
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
+      margin-bottom: 0.3rem;
     }
+
     .value {
       color: #222;
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 600;
       word-break: break-word;
       overflow-wrap: break-word;
     }
+
     .employee-actions {
       grid-column: 1 / -1;
       display: flex;
-      gap: 1rem;
+      flex-direction: column;
+      gap: 0.7rem;
       margin-top: 1rem;
-      justify-content: flex-start;
     }
+
     .edit-btn,
     .delete-btn {
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 0.4rem;
       border: none;
       border-radius: 0.5rem;
-      font-size: 1rem;
+      font-size: 0.9rem;
       font-weight: 600;
-      padding: 0.6rem 1.3rem;
+      padding: 0.6rem 1rem;
       cursor: pointer;
       transition: background 0.18s, color 0.18s;
+      width: 100%;
     }
+
     .edit-btn {
       background: #5b53a6;
       color: #fff;
     }
+
     .delete-btn {
       background: #ff6200;
       color: #fff;
     }
+
     .edit-btn:hover {
       background: #473e8f;
     }
+
     .delete-btn:hover {
       background: #e65100;
     }
-    @media (max-width: 600px) {
-      .employee-grid {
-        grid-template-columns: 1fr;
-        gap: 0.7rem;
-        padding: 1rem 0.5rem;
-      }
-      .employee-actions {
-        flex-direction: column;
-        gap: 0.7rem;
-        margin-top: 0.7rem;
+
+    @media (min-width: 768px) {
+      .employee-card-list {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
       }
 
-      @media (max-width: 700px) {
-        .employee-card-list {
-          grid-template-columns: 1fr;
-          gap: 1rem;
-          padding: 0.5rem 0;
-        }
+      .employee-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem 1.5rem;
+        padding: 1.5rem;
+      }
+
+      .employee-actions {
+        flex-direction: row;
+        gap: 1rem;
+      }
+
+      .edit-btn,
+      .delete-btn {
+        width: auto;
+        flex: 1;
+        font-size: 1rem;
+        padding: 0.6rem 1.3rem;
+      }
+
+      .label {
+        font-size: 0.95rem;
+      }
+
+      .value {
+        font-size: 1.1rem;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      .employee-card-list {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2.5rem;
+      }
+
+      .employee-grid {
+        gap: 1.2rem 2rem;
+        padding: 1.5rem 1.2rem;
+      }
+    }
+
+    @media (min-width: 1400px) {
+      .employee-card-list {
+        gap: 3rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .employee-card-list {
+        padding: 0.25rem 0;
+        gap: 1rem;
+      }
+
+      .employee-grid {
+        padding: 0.8rem;
+        gap: 0.8rem;
+      }
+
+      .label {
+        font-size: 0.85rem;
+      }
+
+      .value {
+        font-size: 0.95rem;
+      }
+
+      .edit-btn,
+      .delete-btn {
+        font-size: 0.85rem;
+        padding: 0.5rem 0.8rem;
       }
     }
   `;
@@ -180,7 +258,9 @@ export class GridComponent extends LitElement {
 
   render() {
     return html`
-      ${this.pagedRows.map((employee) => this.#renderEmployee(employee))}
+      <div class="employee-card-list">
+        ${this.pagedRows.map((employee) => this.#renderEmployee(employee))}
+      </div>
       <pagination-component
         .data=${this.data}
         .pageSize=${this.pageSize}

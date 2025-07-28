@@ -13,7 +13,10 @@ export const employeeStore = createStore(
       employees: [],
       addEmployee: (employee) =>
         set((state) => ({
-          employees: [...state.employees, { ...employee, id: crypto.randomUUID() }],
+          employees: [
+            ...state.employees,
+            { ...employee, id: crypto.randomUUID() },
+          ],
         })),
       removeEmployee: (id) =>
         set((state) => ({

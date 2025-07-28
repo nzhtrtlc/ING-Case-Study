@@ -13,6 +13,10 @@ class Table extends LitElement {
   };
 
   static styles = css`
+    .table-container {
+      height: 100%;
+      overflow: auto;
+    }
     table {
       width: 100%;
       border-collapse: collapse;
@@ -23,6 +27,7 @@ class Table extends LitElement {
       padding: 0.75rem 1rem;
       text-align: left;
       border-bottom: 1px solid #eee;
+      white-space: nowrap;
     }
     th {
       color: var(--secondary-color);
@@ -48,6 +53,7 @@ class Table extends LitElement {
       background: none;
       cursor: pointer;
       font-size: 1rem;
+      font-family: 'Poppins', sans-serif;
     }
     .pagination .active {
       font-weight: 600;
@@ -158,32 +164,34 @@ class Table extends LitElement {
         </input-component>
       </div>
 
-      <table>
-        <thead>
-          <tr>
-            ${this.columns.map(
-              (col) => html`<th scope="col">${col.label}</th>`
-            )}
-          </tr>
-        </thead>
-        <tbody>
-          ${this.pagedRows.length
-            ? this.pagedRows.map(
-                (row) => html`<tr>
-                  ${this.columns.map((col) =>
-                    col.render
-                      ? col.render(row)
-                      : html`<td>${row[col.key]}</td>`
-                  )}
-                </tr>`
-              )
-            : html`<tr>
-                <td colspan="${this.columns.length}" class="no-data">
-                  No data found
-                </td>
-              </tr>`}
-        </tbody>
-      </table>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              ${this.columns.map(
+                (col) => html`<th scope="col">${col.label}</th>`
+              )}
+            </tr>
+          </thead>
+          <tbody>
+            ${this.pagedRows.length
+              ? this.pagedRows.map(
+                  (row) => html`<tr>
+                    ${this.columns.map((col) =>
+                      col.render
+                        ? col.render(row)
+                        : html`<td>${row[col.key]}</td>`
+                    )}
+                  </tr>`
+                )
+              : html`<tr>
+                  <td colspan="${this.columns.length}" class="no-data">
+                    No data found
+                  </td>
+                </tr>`}
+          </tbody>
+        </table>
+      </div>
 
       <pagination-component
         .data=${this.filteredData}

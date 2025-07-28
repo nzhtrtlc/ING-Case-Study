@@ -4,7 +4,8 @@ class Input extends LitElement {
   static styles = css`
     .input-box {
       position: relative;
-      width: 350px;
+      width: 100%;
+      max-width: 350px;
     }
     ::slotted([slot='control']) {
       width: 100%;
@@ -13,6 +14,7 @@ class Input extends LitElement {
       border-radius: 10px;
       background: #fff;
       font-size: 1rem;
+      font-family: 'Inter', Arial, sans-serif;
       color: #4d4d4d;
       outline: none;
       box-sizing: border-box;

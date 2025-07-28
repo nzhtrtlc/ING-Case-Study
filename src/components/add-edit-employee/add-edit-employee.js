@@ -3,50 +3,81 @@ import '../button/button.js';
 import '../input/input.js';
 import { employeeStore } from '../../store/employee.js';
 import { DMYtoIso, isoToDMY } from '../../utils/date.js';
+import { Router } from '@vaadin/router';
 
 class AddEditEmployee extends LitElement {
   static styles = css`
     h2 {
       color: var(--primary-color);
     }
+
     .add-edit-employee {
       display: flex;
       flex-direction: column;
       gap: 1rem;
     }
+
     .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
+
     .form {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 3rem;
+      gap: 2rem;
       background-color: #fff;
       border-radius: 10px;
       box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-      padding: 1rem;
+      padding: 2rem;
     }
-    .form input {
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      padding: 0.5rem;
-      width: calc(100% - 1rem);
+
+    input-component {
+      width: 100%;
+      min-width: 0; /* Grid overflow'u önlemek için */
     }
+
+    .form input:not([slot='control']) {
+      display: none;
+    }
+
     .actions {
       display: flex;
       justify-content: center;
       grid-column: 1 / -1;
       gap: 1rem;
       width: 100%;
+      margin-top: 1rem;
     }
+
     button-component {
       width: 200px;
+      flex-shrink: 0;
     }
+
+    @media (max-width: 992px) {
+      .form {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+        padding: 1.5rem;
+      }
+    }
+
     @media (max-width: 576px) {
       .form {
         grid-template-columns: 1fr;
+        gap: 1rem;
+        padding: 1rem;
+      }
+
+      button-component {
+        width: 150px;
+      }
+
+      .actions {
+        flex-direction: column;
+        align-items: center;
       }
     }
   `;
@@ -55,7 +86,6 @@ class AddEditEmployee extends LitElement {
     employee: { type: Object },
     isEditing: { type: Boolean, state: true },
   };
-
 
   constructor() {
     super();
@@ -68,13 +98,21 @@ class AddEditEmployee extends LitElement {
     // URL değişikliklerini dinle
     window.addEventListener('popstate', this.handleUrlChange);
     // İlk yükleme
-    this.checkEmployeeFromUrl();
+    this.#checkEmployeeFromUrl();
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
     // Event listener'ı temizle
     window.removeEventListener('popstate', this.handleUrlChange);
+  }
+
+  #reloadPage(url) {
+    if (url) {
+      window.location.replace(url);
+    } else {
+      window.location.reload();
+    }
   }
 
 
@@ -114,10 +152,10 @@ class AddEditEmployee extends LitElement {
   }
 
   handleUrlChange = () => {
-    this.checkEmployeeFromUrl();
-  }
+    this.#checkEmployeeFromUrl();
+  };
 
-  checkEmployeeFromUrl() {
+  #checkEmployeeFromUrl() {
     const employeeId = this.getIdParam();
 
     if (employeeId) {
@@ -140,6 +178,7 @@ class AddEditEmployee extends LitElement {
     console.log('updatedEmployeeData', updatedEmployeeData);
     employeeStore.getState().updateEmployee(updatedEmployeeData);
     alert('Employee updated successfully');
+    this.#reloadPage();
   }
 
   addEmployee(e) {
@@ -148,14 +187,19 @@ class AddEditEmployee extends LitElement {
     form.requestSubmit();
     if (form.checkValidity()) {
       const formData = new FormData(form);
-      const formObjectWithoutId = Object.fromEntries(formData.entries().filter(([key, _]) => key !== 'id'));
+      const formObjectWithoutId = Object.fromEntries(
+        formData.entries().filter(([key, _]) => key !== 'id')
+      );
       employeeStore.getState().addEmployee(formObjectWithoutId);
       alert('Employee added successfully');
-      window.location.reload();
-      window.location.replace('/add-edit-employee');
-      
+      this.#reloadPage('/add-edit-employee');
     }
   }
+
+  #handleCancel() {
+    Router.go('/employees')
+  }
+
 
   render() {
     return html`
@@ -163,7 +207,7 @@ class AddEditEmployee extends LitElement {
         <div class="header">
           <h2>${this.isEditing ? 'Edit Employee' : 'Add Employee'}</h2>
         </div>
-        <form class="form" @submit=${e => e.preventDefault()}>
+        <form class="form" @submit=${(e) => e.preventDefault()}>
           <input-component>
             <label slot="label">First Name</label>
             <input
@@ -261,7 +305,7 @@ class AddEditEmployee extends LitElement {
               <option value="Senior">Senior</option>
               <option value="Medior">Medior</option>
               <option value="Junior">Junior</option>
-          </select>
+            </select>
           </input-component>
           <input-component>
             <input
@@ -283,6 +327,7 @@ class AddEditEmployee extends LitElement {
               name="cancel"
               label="Cancel"
               variant="secondary"
+              @click=${this.#handleCancel}
             ></button-component>
           </div>
         </form>

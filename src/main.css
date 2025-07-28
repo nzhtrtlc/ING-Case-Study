@@ -64,3 +64,15 @@ ul,
 ol {
     list-style: none;
 }
+
+@media only screen and (max-width: 991.98px) {
+    main {
+        padding: 0 1rem;
+    }
+}
+
+@media only screen and (max-width: 575.98px) {
+    main {
+        padding: 0 1rem;
+    }
+}

@@ -15,6 +15,7 @@ class Pagination extends LitElement {
       background: none;
       cursor: pointer;
       font-size: 1rem;
+      font-family: 'Poppins', sans-serif;
     }
     .pagination .active {
       font-weight: 600;
@@ -92,6 +93,7 @@ class Pagination extends LitElement {
       changed.has('currentPage') ||
       changed.has('pageSize')
     ) {
+      // data veya page değişince dispatch et
       this._dispatch();
     }
   }

@@ -24,7 +24,6 @@ export const employeeStore = createStore(
         })),
       updateEmployee: (employee) =>
         set((state) => {
-          console.log('updateEmployee', employee);
           return {
             employees: state.employees.map((e) =>
               e.id === employee.id ? employee : e

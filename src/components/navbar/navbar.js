@@ -1,6 +1,18 @@
 import { LitElement, html, css } from 'lit';
+import { t } from '../../localization/i18n.js';
+import { flagTR, flagEN } from '../svgs/flags.js';
+import { appStore } from '../../store/app.js';
 
 export class Navbar extends LitElement {
+  static properties = {
+    showLangDropdown: { type: Boolean, state: true },
+  };
+
+  constructor() {
+    super();
+    this.showLangDropdown = false;
+  }
+
   static styles = css`
 
     .navbar {
@@ -56,7 +68,61 @@ export class Navbar extends LitElement {
       .navbar__link.active{
         color: var(--primary-color);
       }
+  .lang-dropdown {
+    position: absolute;
+    top: 110%;
+    right: 0;
+    background: white;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    z-index: 100;
+    min-width: 100px;
+    border-radius: 4px;
+  }
+  .lang-dropdown div {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .lang-dropdown div:hover {
+    background: #f5f5f5;
+  }
   }`;
+
+  getLang() {
+    return document.documentElement.lang;
+  }
+
+  toggleLangDropdown(e) {
+    e.stopPropagation();
+    this.showLangDropdown = !this.showLangDropdown;
+  }
+
+  setLang(lang) {
+    document.documentElement.lang = lang;
+    this.showLangDropdown = false;
+    appStore.getState().setAppLang(lang);
+    window.location.reload();
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    window.addEventListener(
+      'click',
+      (this._closeDropdown = () => {
+        if (this.showLangDropdown) {
+          this.showLangDropdown = false;
+          this.requestUpdate();
+        }
+      })
+    );
+  }
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    window.removeEventListener('click', this._closeDropdown);
+  }
 
   render() {
     return html`
@@ -73,23 +139,42 @@ export class Navbar extends LitElement {
           <li>
             <a href="/employees" class="navbar__link active">
               <i class="ri-user-3-line"></i>
-              Employees
+              ${t('employees')}
             </a>
           </li>
           <li>
             <a href="/add-edit-employee" class="navbar__link">
               <i class="ri-add-line">+</i>
-              <span>Add New</span>
+              ${t('addNew')}
             </a>
           </li>
-          <li>
-            <div class="navbar__lang" aria-label="Change Language">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/b/b4/Flag_of_Turkey.svg"
-                alt="Türkçe"
-              />
-            </div>
-          </li>
+          <li style="position:relative;">
+  <div
+    class="navbar__lang"
+    aria-label="Change Language"
+    @click=${this.toggleLangDropdown}
+    tabindex="0"
+    aria-haspopup="listbox"
+    aria-expanded="${this.showLangDropdown}"
+  >
+    ${this.getLang() === 'tr' ? flagTR() : flagEN()}
+  </div>
+  ${
+    this.showLangDropdown
+      ? html`
+          <div class="lang-dropdown" @click=${(e) => e.stopPropagation()}>
+            ${this.getLang() === 'tr'
+              ? html`<div @click=${() => this.setLang('en')}>
+                  ${flagEN()} English
+                </div>`
+              : html`<div @click=${() => this.setLang('tr')}>
+                  ${flagTR()} Türkçe
+                </div>`}
+          </div>
+        `
+      : ''
+  }
+</li>
         </ul>
       </nav>
     `;

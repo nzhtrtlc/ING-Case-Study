@@ -1,4 +1,6 @@
 import { LitElement, html, css } from 'lit';
+import { t } from '../../localization/i18n.js';
+import { iconPrev, iconNext } from '../svgs/navigation.js';
 
 class Pagination extends LitElement {
   static styles = css`
@@ -99,7 +101,6 @@ class Pagination extends LitElement {
   }
 
   get pagedData() {
-    console.log('pagedData', this.data, this.currentPage, this.pageSize);
     const start = (this.currentPage - 1) * this.pageSize;
     this.dispatchEvent(
       new CustomEvent('onPageChange', {
@@ -147,18 +148,21 @@ class Pagination extends LitElement {
 
   render() {
     const paginationButtons = this.paginationButtons;
+    const isFirstPage = this.currentPage === 1;
+    const isLastPage = this.currentPage === this.#calcPages().length;
     return paginationButtons.length > 1
       ? html`
           <div class="pagination">
             <button
-              ?disabled=${this.currentPage === 1}
+              ?disabled=${isFirstPage}
               @click=${() => this.goToPage(this.currentPage - 1)}
             >
-              Prev
+              ${iconPrev(24, isFirstPage ? 'gray' : 'var(--primary-color)')}
             </button>
 
             <span class="page-info">
-              Page ${this.currentPage} of ${this.#calcPages().length}
+              ${t('page')} ${this.currentPage} ${t('of')}
+              ${this.#calcPages().length}
             </span>
 
             <span class="page-buttons">
@@ -175,10 +179,10 @@ class Pagination extends LitElement {
             </span>
 
             <button
-              ?disabled=${this.currentPage === this.totalPages}
+              ?disabled=${isLastPage}
               @click=${() => this.goToPage(this.currentPage + 1)}
             >
-              Next
+              ${iconNext(24, isLastPage ? 'gray' : 'var(--primary-color)')}
             </button>
           </div>
         `

@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import '../input/input.js';
 import '../pagination/pagination.js';
+import { t } from '../../localization/i18n.js';
 
 class Table extends LitElement {
   static properties = {
@@ -10,6 +11,7 @@ class Table extends LitElement {
     currentPage: { type: Number },
     searchValue: { type: String },
     pagedRows: { type: Array, state: true },
+    fadingItems: { type: Set },
   };
 
   static styles = css`
@@ -39,6 +41,11 @@ class Table extends LitElement {
     }
     tr:last-child td {
       border-bottom: none;
+    }
+
+    tr.fade-out {
+      opacity: 0;
+      transition: opacity 0.3s ease-out;
     }
     .pagination {
       display: flex;
@@ -147,7 +154,7 @@ class Table extends LitElement {
             .value=${this.searchValue}
             @input=${this.handleSearch}
             type="text"
-            placeholder="Search..."
+            placeholder="${t('search')}"
           />
           <svg
             slot="icon"
@@ -176,7 +183,9 @@ class Table extends LitElement {
           <tbody>
             ${this.pagedRows.length
               ? this.pagedRows.map(
-                  (row) => html`<tr>
+                  (row) => html`<tr
+                    class="${this.fadingItems?.has(row.id) ? 'fade-out' : ''}"
+                  >
                     ${this.columns.map((col) =>
                       col.render
                         ? col.render(row)
@@ -186,7 +195,7 @@ class Table extends LitElement {
                 )
               : html`<tr>
                   <td colspan="${this.columns.length}" class="no-data">
-                    No data found
+                    ${t('noData')}
                   </td>
                 </tr>`}
           </tbody>

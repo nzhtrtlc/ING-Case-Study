@@ -2,6 +2,10 @@ import { LitElement, html, css } from 'lit';
 import '../table/table.js';
 import './grid.js';
 import { employeeStore } from '../../store/employee.js';
+import { appStore } from '../../store/app.js';
+import { t } from '../../localization/i18n.js';
+import { iconBlock, iconGrid } from '../svgs/other_icons.js';
+import { showDialog } from '../_common/dialog/dialog.js';
 
 class ListEmployees extends LitElement {
   static styles = css`
@@ -13,6 +17,13 @@ class ListEmployees extends LitElement {
       flex-direction: row;
       margin-right: 1rem;
       gap: 1rem;
+    }
+    .header_right div {
+      cursor: pointer;
+      transition: all 0.2s ease;
+      &:hover {
+        transform: scale(1.05);
+      }
     }
     .header {
       display: flex;
@@ -34,6 +45,12 @@ class ListEmployees extends LitElement {
       padding: 1rem 0;
     }
 
+    .employee-fade-out {
+      opacity: 0;
+      transition: opacity 0.3s ease-out;
+      pointer-events: none;
+    }
+
     @media (max-width: 600px) {
       .employee-card-list {
         grid-template-columns: 1fr;
@@ -45,30 +62,62 @@ class ListEmployees extends LitElement {
   static properties = {
     employees: { type: Array },
     displayMode: { type: String, state: true },
+    fadingEmployees: { type: Set, state: true },
   };
 
   constructor() {
     super();
-    this.displayMode = '';
+    this.displayMode = appStore.getState().employeeDisplayMode;
     this.employees = employeeStore.getState().employees;
+    this.fadingEmployees = new Set();
+
     employeeStore.subscribe((state) => {
       this.employees = state.employees;
     });
+    appStore.subscribe((state) => {
+      this.displayMode = state.employeeDisplayMode;
+    });
+  }
+
+  async removeEmployee(employee) {
+    const confirm = await showDialog({
+      title: 'Delete Employee',
+      message: `Are you sure you want to delete this employee? ${employee.firstName} ${employee.lastName}`,
+      confirmText: 'Yes, Delete',
+      cancelText: 'No',
+    });
+    if (!confirm) {
+      return;
+    }
+    this.fadingEmployees.add(employee.id);
+    this.requestUpdate();
+
+    // Animasyon tamamlandıktan sonra store'dan sil
+    setTimeout(() => {
+      employeeStore.getState().removeEmployee(employee.id);
+      this.fadingEmployees.delete(employee.id);
+      this.requestUpdate();
+    }, 300); // CSS transition süresi
+  }
+
+  changeDisplayMode(mode) {
+    appStore.getState().setEmployeeDisplayMode(mode);
+    this.displayMode = mode;
   }
 
   get columns() {
     return [
-      { key: 'firstName', label: 'First Name' },
-      { key: 'lastName', label: 'Last Name' },
-      { key: 'dateOfEmployment', label: 'Date of Employment' },
-      { key: 'dateOfBirth', label: 'Date of Birth' },
-      { key: 'phone', label: 'Phone' },
-      { key: 'email', label: 'Email' },
-      { key: 'department', label: 'Department' },
-      { key: 'position', label: 'Position' },
+      { key: 'firstName', label: t('firstName') },
+      { key: 'lastName', label: t('lastName') },
+      { key: 'dateOfEmployment', label: t('dateOfEmployment') },
+      { key: 'dateOfBirth', label: t('dateOfBirth') },
+      { key: 'phone', label: t('phone') },
+      { key: 'email', label: t('email') },
+      { key: 'department', label: t('department') },
+      { key: 'position', label: t('position') },
       {
         key: 'actions',
-        label: 'Actions',
+        label: t('actions'),
         render: (row) => html`
           <td>
             <div
@@ -89,7 +138,7 @@ class ListEmployees extends LitElement {
                 width="20"
                 height="20"
                 src="/public/assets/icons/trash_icon.svg"
-                @click=${() => alert('Delete ' + row.position)}
+                @click=${() => this.removeEmployee(row)}
                 style="cursor: pointer;"
               />
             </div>
@@ -100,14 +149,23 @@ class ListEmployees extends LitElement {
   }
 
   render() {
-    console.log('employees', this.employees);
     return html`
       <div>
         <div class="header">
-          <h2>Employee List</h2>
+          <h2>${t('employeeList')}</h2>
           <div class="header_right">
-            <img width="30" src="/public/assets/icons/block_icon.svg" />
-            <img width="30" src="/public/assets/icons/grid_icon.svg" />
+            <div @click=${() => this.changeDisplayMode('table')}>
+              ${iconBlock(
+                30,
+                this.displayMode === 'table' ? 'var(--primary-color)' : 'gray'
+              )}
+            </div>
+            <div @click=${() => this.changeDisplayMode('grid')}>
+              ${iconGrid(
+                30,
+                this.displayMode === 'grid' ? 'var(--primary-color)' : 'gray'
+              )}
+            </div>
           </div>
         </div>
         ${this.displayMode === 'grid'
@@ -115,6 +173,7 @@ class ListEmployees extends LitElement {
           : html`<table-component
               .data=${this.employees}
               .columns=${this.columns}
+              .fadingItems=${this.fadingEmployees}
             ></table-component>`}
       </div>
     `;

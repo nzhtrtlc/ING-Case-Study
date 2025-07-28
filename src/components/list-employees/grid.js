@@ -1,4 +1,7 @@
 import { LitElement, html, css } from 'lit';
+import { employeeStore } from '../../store/employee.js';
+import { Router } from '@vaadin/router';
+import { showDialog } from '../_common/dialog/dialog.js';
 
 export class GridComponent extends LitElement {
   static properties = {
@@ -201,12 +204,20 @@ export class GridComponent extends LitElement {
     this.currentPage = e.detail.page;
   }
 
-  editEmployee() {
-    // TODO: navigate add-edit-employee
+  editEmployee(employee) {
+    Router.go(`/add-edit-employee?id=${employee.id}`);
   }
 
-  deleteEmployee() {
-    // TODO: Implement delete employee
+  async removeEmployee(employee) {
+    const confirm = await showDialog({
+      title: 'Delete Employee',
+      message: `Are you sure you want to delete this employee? ${employee.firstName} ${employee.lastName}`,
+      confirmText: 'Yes, Delete',
+      cancelText: 'No',
+    });
+    if (confirm) {
+      employeeStore.getState().removeEmployee(employee.id);
+    }
   }
 
   #renderEmployee(e) {
@@ -245,10 +256,10 @@ export class GridComponent extends LitElement {
           <span class="value">${e.position || ''}</span>
         </div>
         <div class="employee-actions">
-          <button @click=${this.editEmployee} class="edit-btn">
+          <button @click=${() => this.editEmployee(e)} class="edit-btn">
             <span class="icon">✏️</span> Edit
           </button>
-          <button @click=${this.deleteEmployee} class="delete-btn">
+          <button @click=${() => this.removeEmployee(e)} class="delete-btn">
             <span class="icon">🗑️</span> Delete
           </button>
         </div>

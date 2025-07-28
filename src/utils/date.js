@@ -1,5 +1,4 @@
 export function DMYtoIso(inputDate) {
-  console.log('inputDate', inputDate);
   if (!inputDate) {
     return '';
   }

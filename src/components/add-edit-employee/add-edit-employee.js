@@ -4,6 +4,8 @@ import '../input/input.js';
 import { employeeStore } from '../../store/employee.js';
 import { DMYtoIso, isoToDMY } from '../../utils/date.js';
 import { Router } from '@vaadin/router';
+import { t } from '../../localization/i18n.js';
+import { showDialog } from '../_common/dialog/dialog.js';
 
 class AddEditEmployee extends LitElement {
   static styles = css`
@@ -115,7 +117,6 @@ class AddEditEmployee extends LitElement {
     }
   }
 
-
   getIdParam() {
     return new URLSearchParams(window.location.search).get('id');
   }
@@ -123,12 +124,10 @@ class AddEditEmployee extends LitElement {
   firstUpdated() {
     const employeeId = this.getIdParam();
     if (employeeId) {
-      console.log('employeeId', employeeId);
       this.title = 'Edit Employee';
       this.employee = employeeStore
         .getState()
         .employees.find((employee) => employee.id === employeeId);
-      console.log('found employee', this.employee);
     }
   }
 
@@ -141,7 +140,6 @@ class AddEditEmployee extends LitElement {
     Array.from(form.elements)
       .filter((el) => el instanceof HTMLInputElement && el.type === 'date')
       .forEach((input) => {
-        console.log('input', input);
         const name = input.name;
         const dateObject = data[name];
         if (dateObject) {
@@ -163,128 +161,137 @@ class AddEditEmployee extends LitElement {
       this.employee = employeeStore
         .getState()
         .employees.find((employee) => employee.id === employeeId);
-      console.log('Edit mode - found employee:', this.employee);
     } else {
       this.isEditing = false;
       this.employee = null;
-      console.log('Add mode');
     }
 
     this.requestUpdate();
   }
 
-  updateEmployee() {
-    const updatedEmployeeData = this.getFormData();
-    console.log('updatedEmployeeData', updatedEmployeeData);
-    employeeStore.getState().updateEmployee(updatedEmployeeData);
-    alert('Employee updated successfully');
-    this.#reloadPage();
+  async updateEmployee() {
+    const confirm = await showDialog({
+      title: 'Update Employee',
+      message: 'Are you sure you want to update this employee?',
+      confirmText: 'Yes, Update',
+      cancelText: 'No',
+    });
+    if (confirm) {
+      const updatedEmployeeData = this.getFormData();
+      employeeStore.getState().updateEmployee(updatedEmployeeData);
+    }
   }
 
-  addEmployee(e) {
+  async addEmployee(e) {
     e.preventDefault();
     const form = this.shadowRoot.querySelector('form');
     form.requestSubmit();
     if (form.checkValidity()) {
-      const formData = new FormData(form);
-      const formObjectWithoutId = Object.fromEntries(
-        formData.entries().filter(([key, _]) => key !== 'id')
-      );
-      employeeStore.getState().addEmployee(formObjectWithoutId);
-      alert('Employee added successfully');
-      this.#reloadPage('/add-edit-employee');
+      const confirm = await showDialog({
+        title: 'Add Employee',
+        message: 'Are you sure you want to add this employee?',
+        confirmText: 'Yes, Add',
+        cancelText: 'No',
+      });
+      if (confirm) {
+        const formData = new FormData(form);
+        const formObjectWithoutId = Object.fromEntries(
+          formData.entries().filter(([key, _]) => key !== 'id')
+        );
+        employeeStore.getState().addEmployee(formObjectWithoutId);
+        this.#reloadPage('/add-edit-employee');
+      }
     }
   }
 
   #handleCancel() {
-    Router.go('/employees')
+    Router.go('/employees');
   }
-
 
   render() {
     return html`
       <div class="add-edit-employee">
         <div class="header">
-          <h2>${this.isEditing ? 'Edit Employee' : 'Add Employee'}</h2>
+          <h2>${this.isEditing ? t('editEmployee') : t('addEmployee')}</h2>
         </div>
         <form class="form" @submit=${(e) => e.preventDefault()}>
           <input-component>
-            <label slot="label">First Name</label>
+            <label slot="label">${t('firstName')}</label>
             <input
               required
               slot="control"
               type="text"
               name="firstName"
-              placeholder="First Name"
+              placeholder="${t('firstName')}"
               value=${this.employee?.firstName || ''}
             />
           </input-component>
           <input-component>
-            <label slot="label">Last Name</label>
+            <label slot="label">${t('lastName')}</label>
             <input
               required
               slot="control"
               type="text"
               name="lastName"
-              placeholder="Last Name"
+              placeholder="${t('lastName')}"
               value=${this.employee?.lastName || ''}
             />
           </input-component>
           <input-component>
-            <label slot="label">Date of Employment</label>
+            <label slot="label">${t('dateOfEmployment')}</label>
             <input
               required
               slot="control"
               type="date"
               name="dateOfEmployment"
-              placeholder="Date of Employment"
+              placeholder="${t('dateOfEmployment')}"
               value=${DMYtoIso(this.employee?.dateOfEmployment)}
             />
           </input-component>
           <input-component>
-            <label slot="label">Date of Birth</label>
+            <label slot="label">${t('dateOfBirth')}</label>
             <input
               required
               slot="control"
               type="date"
               name="dateOfBirth"
-              placeholder="Date of Birth"
+              placeholder="${t('dateOfBirth')}"
               value=${DMYtoIso(this.employee?.dateOfBirth)}
             />
           </input-component>
           <input-component>
-            <label slot="label">Phone</label>
+            <label slot="label">${t('phone')}</label>
             <input
               required
               slot="control"
-              type="text"
+              type="tel"
               name="phone"
-              placeholder="Phone"
+              placeholder="${t('phone')}"
               value=${this.employee?.phone || ''}
             />
           </input-component>
           <input-component>
-            <label slot="label">Email</label>
+            <label slot="label">${t('email')}</label>
             <input
               required
               slot="control"
               type="email"
               name="email"
-              placeholder="Email"
+              placeholder="${t('email')}"
               value=${this.employee?.email || ''}
             />
           </input-component>
           <input-component>
-            <label slot="label">Department</label>
+            <label slot="label">${t('department')}</label>
             <select
               required
               slot="control"
               type="text"
               name="department"
-              placeholder="Department"
+              placeholder="${t('department')}"
               .value=${this.employee?.department || ''}
             >
-              <option value="">Select Department</option>
+              <option value="">${t('selectDepartment')}</option>
               <option value="HR">HR</option>
               <option value="Tech">Tech</option>
               <option value="Finance">Finance</option>
@@ -292,16 +299,16 @@ class AddEditEmployee extends LitElement {
             </select>
           </input-component>
           <input-component>
-            <label slot="label">Position</label>
+            <label slot="label">${t('position')}</label>
             <select
               required
               slot="control"
               type="select"
               name="position"
-              placeholder="Position"
+              placeholder="${t('position')}"
               .value=${this.employee?.position || ''}
             >
-              <option value="">Select Position</option>
+              <option value="">${t('selectPosition')}</option>
               <option value="Senior">Senior</option>
               <option value="Medior">Medior</option>
               <option value="Junior">Junior</option>

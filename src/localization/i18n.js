@@ -1,0 +1,60 @@
+export const translations = {
+  en: {
+    employees: 'Employees',
+    employeeList: 'Employee List',
+    addNew: 'Add New',
+    firstName: 'First Name',
+    lastName: 'Last Name',
+    dateOfEmployment: 'Date of Employment',
+    dateOfBirth: 'Date of Birth',
+    phone: 'Phone Number',
+    email: 'Email Address',
+    department: 'Department',
+    position: 'Position',
+    search: 'Search...',
+    save: 'Save',
+    update: 'Update',
+    cancel: 'Cancel',
+    delete: 'Delete',
+    of: 'of',
+    actions: 'Actions',
+    editEmployee: 'Edit Employee',
+    addEmployee: 'Add Employee',
+    selectDepartment: 'Select Department',
+    selectPosition: 'Select Position',
+  },
+  tr: {
+    page: 'Sayfa',
+    of: '/',
+    employees: 'Çalışanlar',
+    employeeList: 'Çalışan Listesi',
+    addNew: 'Yeni Ekle',
+    firstName: 'Ad',
+    lastName: 'Soyad',
+    dateOfEmployment: 'İşe Giriş Tarihi',
+    dateOfBirth: 'Doğum Tarihi',
+    phone: 'Telefon Numarası',
+    email: 'E-posta Adresi',
+    department: 'Departman',
+    position: 'Pozisyon',
+    search: 'Ara...',
+    save: 'Kaydet',
+    update: 'Güncelle',
+    cancel: 'İptal',
+    delete: 'Sil',
+    actions: 'İşlemler',
+    editEmployee: 'Çalışanı Düzenle',
+    addEmployee: 'Çalışan Ekle',
+    selectDepartment: 'Departman Seç',
+    selectPosition: 'Pozisyon Seç',
+  },
+};
+
+export function t(key) {
+  const lang = document.documentElement.lang || 'en';
+  return translations[lang]?.[key] || translations['en'][key] || key;
+}
+
+export function lang() {
+  return document.documentElement.lang;
+}

@@ -49,7 +49,7 @@ class ListEmployees extends LitElement {
 
   constructor() {
     super();
-    this.displayMode = 'grid';
+    this.displayMode = '';
     this.employees = employeeStore.getState().employees;
     employeeStore.subscribe((state) => {
       this.employees = state.employees;

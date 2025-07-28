@@ -15,7 +15,6 @@ class Pagination extends LitElement {
       background: none;
       cursor: pointer;
       font-size: 1rem;
-      font-family: 'Poppins', sans-serif;
     }
     .pagination .active {
       font-weight: 600;
@@ -23,6 +22,25 @@ class Pagination extends LitElement {
       background-color: var(--primary-color);
       border-radius: 50%;
       padding: 0.3rem 0.6rem;
+    }
+    .page-buttons {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .page-info {
+      margin: 0 1rem;
+      font-size: 1rem;
+      display: none;
+    }
+
+    @media (max-width: 576px) {
+      .page-buttons {
+        display: none;
+      }
+      .page-info {
+        display: block;
+      }
     }
   `;
 
@@ -74,7 +92,6 @@ class Pagination extends LitElement {
       changed.has('currentPage') ||
       changed.has('pageSize')
     ) {
-      // data veya page değişince dispatch et
       this._dispatch();
     }
   }
@@ -129,30 +146,40 @@ class Pagination extends LitElement {
   render() {
     const paginationButtons = this.paginationButtons;
     return paginationButtons.length > 1
-      ? html`<div class="pagination">
-          <button
-            ?disabled=${this.currentPage === 1}
-            @click=${() => this.goToPage(this.currentPage - 1)}
-          >
-            Prev
-          </button>
-          ${paginationButtons.map(
-            (p) => html`
-              <button
-                class=${p === this.currentPage ? 'active' : ''}
-                @click=${() => this.goToPage(p)}
-              >
-                ${p}
-              </button>
-            `
-          )}
-          <button
-            ?disabled=${this.currentPage === paginationButtons.length}
-            @click=${() => this.goToPage(this.currentPage + 1)}
-          >
-            Next
-          </button>
-        </div>`
+      ? html`
+          <div class="pagination">
+            <button
+              ?disabled=${this.currentPage === 1}
+              @click=${() => this.goToPage(this.currentPage - 1)}
+            >
+              Prev
+            </button>
+
+            <span class="page-info">
+              Page ${this.currentPage} of ${this.#calcPages().length}
+            </span>
+
+            <span class="page-buttons">
+              ${paginationButtons.map((p) =>
+                p === '...'
+                  ? html`<span class="ellipsis">…</span>`
+                  : html`<button
+                      class=${p === this.currentPage ? 'active' : ''}
+                      @click=${() => this.goToPage(p)}
+                    >
+                      ${p}
+                    </button>`
+              )}
+            </span>
+
+            <button
+              ?disabled=${this.currentPage === this.totalPages}
+              @click=${() => this.goToPage(this.currentPage + 1)}
+            >
+              Next
+            </button>
+          </div>
+        `
       : null;
   }
 }

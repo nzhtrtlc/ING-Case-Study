@@ -53,26 +53,30 @@ class AddEditEmployee extends LitElement {
 
   static properties = {
     employee: { type: Object },
+    isEditing: { type: Boolean, state: true },
   };
 
-  dateIcon = html`
-    <svg
-      slot="icon"
-      xmlns="http://www.w3.org/2000/svg"
-      width="20"
-      height="20"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="#ff6200"
-      stroke-width="2"
-    >
-      <rect x="3" y="5" width="18" height="16" rx="3" fill="none" />
-      <path d="M16 3v4M8 3v4M3 9h18" />
-      <circle cx="8" cy="13" r="1" />
-      <circle cx="12" cy="13" r="1" />
-      <circle cx="16" cy="13" r="1" />
-    </svg>
-  `;
+
+  constructor() {
+    super();
+    this.employee = null;
+    this.isEditing = false;
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    // URL değişikliklerini dinle
+    window.addEventListener('popstate', this.handleUrlChange);
+    // İlk yükleme
+    this.checkEmployeeFromUrl();
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    // Event listener'ı temizle
+    window.removeEventListener('popstate', this.handleUrlChange);
+  }
+
 
   getIdParam() {
     return new URLSearchParams(window.location.search).get('id');
@@ -109,6 +113,28 @@ class AddEditEmployee extends LitElement {
     return data;
   }
 
+  handleUrlChange = () => {
+    this.checkEmployeeFromUrl();
+  }
+
+  checkEmployeeFromUrl() {
+    const employeeId = this.getIdParam();
+
+    if (employeeId) {
+      this.isEditing = true;
+      this.employee = employeeStore
+        .getState()
+        .employees.find((employee) => employee.id === employeeId);
+      console.log('Edit mode - found employee:', this.employee);
+    } else {
+      this.isEditing = false;
+      this.employee = null;
+      console.log('Add mode');
+    }
+
+    this.requestUpdate();
+  }
+
   updateEmployee() {
     const updatedEmployeeData = this.getFormData();
     console.log('updatedEmployeeData', updatedEmployeeData);
@@ -133,11 +159,10 @@ class AddEditEmployee extends LitElement {
   }
 
   render() {
-    const isEditing = !!this.getIdParam();
     return html`
       <div class="add-edit-employee">
         <div class="header">
-          <h2>${isEditing ? 'Edit Employee' : 'Add Employee'}</h2>
+          <h2>${this.isEditing ? 'Edit Employee' : 'Add Employee'}</h2>
         </div>
         <form class="form" @submit=${this.handleSubmit}>
           <input-component>
@@ -208,25 +233,36 @@ class AddEditEmployee extends LitElement {
           </input-component>
           <input-component>
             <label slot="label">Department</label>
-            <input
+            <select
               required
               slot="control"
               type="text"
               name="department"
               placeholder="Department"
-              value=${this.employee?.department || ''}
-            />
+              .value=${this.employee?.department || ''}
+            >
+              <option value="">Select Department</option>
+              <option value="HR">HR</option>
+              <option value="Tech">Tech</option>
+              <option value="Finance">Finance</option>
+              <option value="Analytics">Analytics</option>
+            </select>
           </input-component>
           <input-component>
             <label slot="label">Position</label>
-            <input
+            <select
               required
               slot="control"
-              type="text"
+              type="select"
               name="position"
               placeholder="Position"
-              value=${this.employee?.position || ''}
-            />
+              .value=${this.employee?.position || ''}
+            >
+              <option value="">Select Position</option>
+              <option value="Senior">Senior</option>
+              <option value="Medior">Medior</option>
+              <option value="Junior">Junior</option>
+          </select>
           </input-component>
           <input-component>
             <input
@@ -239,10 +275,10 @@ class AddEditEmployee extends LitElement {
           <div class="actions">
             <button-component
               name="save"
-              label=${isEditing ? 'Update' : 'Save'}
+              label=${this.isEditing ? 'Update' : 'Save'}
               variant="primary"
               type="submit"
-              @click=${isEditing ? this.updateEmployee : this.addEmployee}
+              @click=${this.isEditing ? this.updateEmployee : this.addEmployee}
             ></button-component>
             <button-component
               name="cancel"

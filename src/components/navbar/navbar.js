@@ -29,6 +29,8 @@ export class Navbar extends LitElement {
     .navbar__left {
       display: flex;
       align-items: center;
+      text-decoration: none;
+      color: var(--text-color);
     }
     .navbar__menu {
       display: flex;
@@ -59,7 +61,7 @@ export class Navbar extends LitElement {
   render() {
     return html`
       <nav class="navbar" aria-label="Main Navigation">
-        <div class="navbar__left">
+        <a href="/" class="navbar__left">
           <img
             src="/public/assets/images/ing_tr.png"
             alt="ING Logo"

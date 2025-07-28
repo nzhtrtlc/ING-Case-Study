@@ -13,7 +13,6 @@ class Input extends LitElement {
       border-radius: 10px;
       background: #fff;
       font-size: 1rem;
-      font-family: 'Inter', Arial, sans-serif;
       color: #4d4d4d;
       outline: none;
       box-sizing: border-box;

@@ -48,7 +48,6 @@ class Table extends LitElement {
       background: none;
       cursor: pointer;
       font-size: 1rem;
-      font-family: 'Poppins', sans-serif;
     }
     .pagination .active {
       font-weight: 600;
@@ -130,7 +129,7 @@ class Table extends LitElement {
   }
 
   handlePageChange(e) {
-    this.currentPage = e.detail.page; // yeni sayfayı al
+    this.currentPage = e.detail.page;
   }
 
   render() {
@@ -145,7 +144,7 @@ class Table extends LitElement {
             placeholder="Search..."
           />
           <svg
-        slot="icon"
+            slot="icon"
             width="24"
             height="24"
             fill="none"

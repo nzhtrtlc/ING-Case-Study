@@ -16,7 +16,7 @@ export default [
     dateOfBirth: '20/10/1998',
     phone: '+(90) 531 376 24 51 11',
     email: 'nil.dalkılıç@company.com',
-    department: 'Tech',
+    department: 'Analytics',
     position: 'Junior',
   },
   {
@@ -26,7 +26,7 @@ export default [
     dateOfBirth: '19/08/1992',
     phone: '+(90) 538 043 91 97 89',
     email: 'eylül.barut@company.com',
-    department: 'Tech',
+    department: 'HR',
     position: 'Medior',
   },
   {
@@ -36,7 +36,7 @@ export default [
     dateOfBirth: '12/10/1995',
     phone: '+(90) 536 609 73 23 50',
     email: 'tolgahan.polat@company.com',
-    department: 'Tech',
+    department: 'Finance',
     position: 'Medior',
   },
   {
@@ -46,7 +46,7 @@ export default [
     dateOfBirth: '10/03/1997',
     phone: '+(90) 531 804 79 44 87',
     email: 'eylül.kurt@company.com',
-    department: 'Analytics',
+    department: 'Tech',
     position: 'Medior',
   },
   {
@@ -66,7 +66,7 @@ export default [
     dateOfBirth: '31/07/1989',
     phone: '+(90) 535 507 73 70 57',
     email: 'ezgi.yılmaz@company.com',
-    department: 'Tech',
+    department: 'HR',
     position: 'Junior',
   },
   {
@@ -76,7 +76,7 @@ export default [
     dateOfBirth: '29/09/1989',
     phone: '+(90) 531 332 05 17 83',
     email: 'serkan.acar@company.com',
-    department: 'Tech',
+    department: 'Finance',
     position: 'Senior',
   },
   {
@@ -96,7 +96,7 @@ export default [
     dateOfBirth: '06/12/1998',
     phone: '+(90) 536 963 26 55 73',
     email: 'nehir.gök@company.com',
-    department: 'Tech',
+    department: 'Analytics',
     position: 'Junior',
   },
   {
@@ -106,7 +106,7 @@ export default [
     dateOfBirth: '09/03/1994',
     phone: '+(90) 535 543 29 70 40',
     email: 'tuna.uçar@company.com',
-    department: 'Analytics',
+    department: 'HR',
     position: 'Medior',
   },
   {
@@ -116,7 +116,7 @@ export default [
     dateOfBirth: '16/08/1990',
     phone: '+(90) 536 287 21 09 93',
     email: 'melis.gök@company.com',
-    department: 'Analytics',
+    department: 'Finance',
     position: 'Junior',
   },
   {
@@ -126,7 +126,7 @@ export default [
     dateOfBirth: '11/12/1993',
     phone: '+(90) 533 024 49 23 13',
     email: 'buse.toprak@company.com',
-    department: 'Analytics',
+    department: 'Tech',
     position: 'Medior',
   },
   {
@@ -146,7 +146,7 @@ export default [
     dateOfBirth: '20/12/1998',
     phone: '+(90) 531 807 31 38 52',
     email: 'selin.can@company.com',
-    department: 'Analytics',
+    department: 'HR',
     position: 'Junior',
   },
   {
@@ -156,7 +156,7 @@ export default [
     dateOfBirth: '10/05/1992',
     phone: '+(90) 530 698 31 69 73',
     email: 'i̇rem.demir@company.com',
-    department: 'Analytics',
+    department: 'Finance',
     position: 'Senior',
   },
   {
@@ -166,7 +166,7 @@ export default [
     dateOfBirth: '19/02/1992',
     phone: '+(90) 533 406 66 72 47',
     email: 'batuhan.demir@company.com',
-    department: 'Analytics',
+    department: 'Tech',
     position: 'Medior',
   },
   {
@@ -176,7 +176,7 @@ export default [
     dateOfBirth: '20/03/1989',
     phone: '+(90) 534 960 59 83 89',
     email: 'burak.güneş@company.com',
-    department: 'Tech',
+    department: 'Analytics',
     position: 'Junior',
   },
   {
@@ -186,7 +186,7 @@ export default [
     dateOfBirth: '02/12/1996',
     phone: '+(90) 538 902 84 70 82',
     email: 'sevgi.kavak@company.com',
-    department: 'Analytics',
+    department: 'HR',
     position: 'Junior',
   },
   {
@@ -196,7 +196,7 @@ export default [
     dateOfBirth: '28/03/1987',
     phone: '+(90) 536 471 45 48 94',
     email: 'hakan.tosun@company.com',
-    department: 'Analytics',
+    department: 'Finance',
     position: 'Senior',
   },
   {
@@ -226,7 +226,7 @@ export default [
     dateOfBirth: '19/06/1996',
     phone: '+(90) 538 905 98 84 11',
     email: 'berk.ertürk@company.com',
-    department: 'Analytics',
+    department: 'HR',
     position: 'Senior',
   },
   {
@@ -236,7 +236,7 @@ export default [
     dateOfBirth: '31/12/1998',
     phone: '+(90) 530 339 21 95 98',
     email: 'ali.yavuz@company.com',
-    department: 'Tech',
+    department: 'Finance',
     position: 'Senior',
   },
   {
@@ -266,7 +266,7 @@ export default [
     dateOfBirth: '25/09/1988',
     phone: '+(90) 538 258 87 19 34',
     email: 'volkan.güneş@company.com',
-    department: 'Analytics',
+    department: 'HR',
     position: 'Junior',
   },
   {
@@ -276,7 +276,7 @@ export default [
     dateOfBirth: '13/01/1994',
     phone: '+(90) 537 630 16 89 04',
     email: 'çağla.taş@company.com',
-    department: 'Analytics',
+    department: 'Finance',
     position: 'Medior',
   },
   {
@@ -286,7 +286,7 @@ export default [
     dateOfBirth: '27/11/1991',
     phone: '+(90) 539 279 72 43 80',
     email: 'ömer.sarı@company.com',
-    department: 'Analytics',
+    department: 'Tech',
     position: 'Medior',
   },
   {
@@ -306,7 +306,7 @@ export default [
     dateOfBirth: '06/02/1987',
     phone: '+(90) 536 217 47 05 81',
     email: 'esra.altun@company.com',
-    department: 'Tech',
+    department: 'HR',
     position: 'Junior',
   },
   {
@@ -316,7 +316,7 @@ export default [
     dateOfBirth: '31/03/1995',
     phone: '+(90) 530 480 95 70 68',
     email: 'mert.tosun@company.com',
-    department: 'Analytics',
+    department: 'Finance',
     position: 'Junior',
   },
   {
@@ -346,7 +346,7 @@ export default [
     dateOfBirth: '05/07/1991',
     phone: '+(90) 534 927 49 17 71',
     email: 'çağla.kavak@company.com',
-    department: 'Tech',
+    department: 'HR',
     position: 'Senior',
   },
   {
@@ -356,7 +356,7 @@ export default [
     dateOfBirth: '16/12/2001',
     phone: '+(90) 536 550 60 92 66',
     email: 'kaan.deniz@company.com',
-    department: 'Tech',
+    department: 'Finance',
     position: 'Senior',
   },
   {
@@ -386,7 +386,7 @@ export default [
     dateOfBirth: '11/03/2002',
     phone: '+(90) 532 809 27 51 94',
     email: 'koray.tunç@company.com',
-    department: 'Analytics',
+    department: 'HR',
     position: 'Medior',
   },
   {
@@ -396,7 +396,7 @@ export default [
     dateOfBirth: '29/05/1991',
     phone: '+(90) 530 964 28 07 40',
     email: 'ece.yüce@company.com',
-    department: 'Analytics',
+    department: 'Finance',
     position: 'Senior',
   },
   {
@@ -426,7 +426,7 @@ export default [
     dateOfBirth: '23/02/1998',
     phone: '+(90) 537 036 84 17 04',
     email: 'can.taş@company.com',
-    department: 'Tech',
+    department: 'HR',
     position: 'Senior',
   },
   {
@@ -436,7 +436,7 @@ export default [
     dateOfBirth: '03/08/1996',
     phone: '+(90) 531 468 76 24 95',
     email: 'samet.deniz@company.com',
-    department: 'Analytics',
+    department: 'Finance',
     position: 'Junior',
   },
   {
@@ -446,7 +446,7 @@ export default [
     dateOfBirth: '05/12/1988',
     phone: '+(90) 530 071 92 30 44',
     email: 'baran.gür@company.com',
-    department: 'Analytics',
+    department: 'Tech',
     position: 'Junior',
   },
   {
@@ -466,7 +466,7 @@ export default [
     dateOfBirth: '04/08/1995',
     phone: '+(90) 539 488 99 71 57',
     email: 'kaan.kurt@company.com',
-    department: 'Tech',
+    department: 'HR',
     position: 'Junior',
   },
   {
@@ -476,7 +476,7 @@ export default [
     dateOfBirth: '02/10/1992',
     phone: '+(90) 531 908 67 74 03',
     email: 'koray.mutlu@company.com',
-    department: 'Tech',
+    department: 'Finance',
     position: 'Medior',
   },
   {
@@ -506,7 +506,7 @@ export default [
     dateOfBirth: '07/02/1997',
     phone: '+(90) 536 381 66 06 88',
     email: 'yasemin.barut@company.com',
-    department: 'Analytics',
+    department: 'HR',
     position: 'Medior',
   },
   {
@@ -516,7 +516,7 @@ export default [
     dateOfBirth: '02/10/2002',
     phone: '+(90) 537 411 43 17 88',
     email: 'sevgi.gür@company.com',
-    department: 'Analytics',
+    department: 'Finance',
     position: 'Medior',
   },
   {
@@ -546,7 +546,7 @@ export default [
     dateOfBirth: '24/10/1992',
     phone: '+(90) 530 992 79 99 25',
     email: 'gökhan.şimşek@company.com',
-    department: 'Tech',
+    department: 'HR',
     position: 'Junior',
   },
   {
@@ -556,7 +556,7 @@ export default [
     dateOfBirth: '26/08/1989',
     phone: '+(90) 539 308 08 71 44',
     email: 'sena.kaya@company.com',
-    department: 'Tech',
+    department: 'Finance',
     position: 'Junior',
   },
   {
@@ -586,7 +586,7 @@ export default [
     dateOfBirth: '22/06/1990',
     phone: '+(90) 536 465 28 58 91',
     email: 'derya.candan@company.com',
-    department: 'Tech',
+    department: 'HR',
     position: 'Junior',
   },
   {
@@ -596,7 +596,7 @@ export default [
     dateOfBirth: '17/04/1992',
     phone: '+(90) 537 610 92 73 29',
     email: 'ceren.ekinci@company.com',
-    department: 'Tech',
+    department: 'Finance',
     position: 'Medior',
   },
   {
@@ -606,7 +606,7 @@ export default [
     dateOfBirth: '01/03/1995',
     phone: '+(90) 535 422 68 55 65',
     email: 'pelin.özdemir@company.com',
-    department: 'Analytics',
+    department: 'Tech',
     position: 'Medior',
   },
   {
@@ -626,7 +626,7 @@ export default [
     dateOfBirth: '07/04/1992',
     phone: '+(90) 534 892 00 14 63',
     email: 'mehmet.çelik@company.com',
-    department: 'Analytics',
+    department: 'HR',
     position: 'Senior',
   },
   {
@@ -636,7 +636,7 @@ export default [
     dateOfBirth: '16/01/2000',
     phone: '+(90) 533 672 43 19 28',
     email: 'gizem.işık@company.com',
-    department: 'Tech',
+    department: 'Finance',
     position: 'Medior',
   },
   {
@@ -646,7 +646,7 @@ export default [
     dateOfBirth: '05/08/1987',
     phone: '+(90) 530 055 70 83 01',
     email: 'sena.gök@company.com',
-    department: 'Analytics',
+    department: 'Tech',
     position: 'Medior',
   },
   {
@@ -666,7 +666,7 @@ export default [
     dateOfBirth: '31/03/2000',
     phone: '+(90) 531 768 35 88 42',
     email: 'deniz.karakaya@company.com',
-    department: 'Tech',
+    department: 'HR',
     position: 'Medior',
   },
   {
@@ -676,7 +676,7 @@ export default [
     dateOfBirth: '19/06/1999',
     phone: '+(90) 536 068 38 84 06',
     email: 'can.tosun@company.com',
-    department: 'Tech',
+    department: 'Finance',
     position: 'Medior',
   },
   {
@@ -696,7 +696,7 @@ export default [
     dateOfBirth: '26/04/1991',
     phone: '+(90) 534 405 70 83 24',
     email: 'yasemin.yılmaz@company.com',
-    department: 'Tech',
+    department: 'Analytics',
     position: 'Junior',
   },
   {
@@ -706,7 +706,7 @@ export default [
     dateOfBirth: '15/08/1989',
     phone: '+(90) 534 714 53 33 16',
     email: 'nehir.yılmaz@company.com',
-    department: 'Analytics',
+    department: 'HR',
     position: 'Senior',
   },
   {
@@ -716,7 +716,7 @@ export default [
     dateOfBirth: '20/07/1989',
     phone: '+(90) 539 006 97 36 38',
     email: 'tolgahan.toprak@company.com',
-    department: 'Analytics',
+    department: 'Finance',
     position: 'Senior',
   },
   {
@@ -746,7 +746,7 @@ export default [
     dateOfBirth: '01/08/1988',
     phone: '+(90) 537 741 24 16 55',
     email: 'deniz.polat@company.com',
-    department: 'Tech',
+    department: 'HR',
     position: 'Junior',
   },
   {
@@ -756,7 +756,7 @@ export default [
     dateOfBirth: '29/01/2002',
     phone: '+(90) 538 502 13 11 08',
     email: 'yasemin.kavak@company.com',
-    department: 'Analytics',
+    department: 'Finance',
     position: 'Junior',
   },
   {
@@ -766,7 +766,7 @@ export default [
     dateOfBirth: '13/07/1991',
     phone: '+(90) 531 778 80 12 39',
     email: 'volkan.dalkılıç@company.com',
-    department: 'Analytics',
+    department: 'Tech',
     position: 'Medior',
   },
   {
@@ -786,7 +786,7 @@ export default [
     dateOfBirth: '30/08/1993',
     phone: '+(90) 535 811 85 67 91',
     email: 'serkan.güneş@company.com',
-    department: 'Tech',
+    department: 'HR',
     position: 'Medior',
   },
   {
@@ -796,7 +796,7 @@ export default [
     dateOfBirth: '27/10/1991',
     phone: '+(90) 535 283 04 89 83',
     email: 'nehir.yurt@company.com',
-    department: 'Analytics',
+    department: 'Finance',
     position: 'Senior',
   },
   {
@@ -806,7 +806,7 @@ export default [
     dateOfBirth: '04/11/1995',
     phone: '+(90) 538 185 63 78 11',
     email: 'derya.gür@company.com',
-    department: 'Analytics',
+    department: 'Tech',
     position: 'Junior',
   },
   {
@@ -816,7 +816,7 @@ export default [
     dateOfBirth: '18/05/1989',
     phone: '+(90) 534 693 77 10 61',
     email: 'kaan.güneş@company.com',
-    department: 'Tech',
+    department: 'Analytics',
     position: 'Medior',
   },
   {
@@ -826,7 +826,7 @@ export default [
     dateOfBirth: '12/10/1997',
     phone: '+(90) 534 588 46 31 33',
     email: 'ayşe.özdemir@company.com',
-    department: 'Analytics',
+    department: 'HR',
     position: 'Junior',
   },
   {
@@ -836,7 +836,7 @@ export default [
     dateOfBirth: '21/07/1992',
     phone: '+(90) 535 334 81 73 09',
     email: 'mehmet.balcı@company.com',
-    department: 'Analytics',
+    department: 'Finance',
     position: 'Senior',
   },
   {
@@ -846,7 +846,7 @@ export default [
     dateOfBirth: '07/01/1999',
     phone: '+(90) 539 590 60 49 21',
     email: 'ahmet.can@company.com',
-    department: 'Analytics',
+    department: 'Tech',
     position: 'Junior',
   },
   {
@@ -856,7 +856,7 @@ export default [
     dateOfBirth: '15/12/2000',
     phone: '+(90) 538 812 33 80 41',
     email: 'batuhan.mutlu@company.com',
-    department: 'Tech',
+    department: 'Analytics',
     position: 'Senior',
   },
   {
@@ -866,7 +866,7 @@ export default [
     dateOfBirth: '31/10/1994',
     phone: '+(90) 533 182 86 87 19',
     email: 'koray.bozkurt@company.com',
-    department: 'Analytics',
+    department: 'HR',
     position: 'Medior',
   },
   {
@@ -876,7 +876,7 @@ export default [
     dateOfBirth: '25/12/2000',
     phone: '+(90) 531 697 99 73 27',
     email: 'baran.baş@company.com',
-    department: 'Analytics',
+    department: 'Finance',
     position: 'Junior',
   },
   {
@@ -886,7 +886,7 @@ export default [
     dateOfBirth: '19/01/1995',
     phone: '+(90) 539 521 73 08 62',
     email: 'yasemin.tunç@company.com',
-    department: 'Analytics',
+    department: 'Tech',
     position: 'Junior',
   },
   {
@@ -906,7 +906,7 @@ export default [
     dateOfBirth: '24/10/2002',
     phone: '+(90) 537 646 83 80 44',
     email: 'tolgahan.ersoy@company.com',
-    department: 'Analytics',
+    department: 'HR',
     position: 'Junior',
   },
   {
@@ -916,7 +916,7 @@ export default [
     dateOfBirth: '01/01/1990',
     phone: '+(90) 537 450 29 86 50',
     email: 'berk.sert@company.com',
-    department: 'Tech',
+    department: 'Finance',
     position: 'Junior',
   },
   {
@@ -926,7 +926,7 @@ export default [
     dateOfBirth: '07/08/1991',
     phone: '+(90) 537 144 14 33 01',
     email: 'tolgahan.yalçın@company.com',
-    department: 'Analytics',
+    department: 'Tech',
     position: 'Junior',
   },
   {
@@ -946,7 +946,7 @@ export default [
     dateOfBirth: '05/02/1999',
     phone: '+(90) 537 387 16 90 55',
     email: 'serkan.tunç@company.com',
-    department: 'Analytics',
+    department: 'HR',
     position: 'Junior',
   },
   {
@@ -956,7 +956,7 @@ export default [
     dateOfBirth: '21/03/1987',
     phone: '+(90) 532 223 82 04 32',
     email: 'eylül.polat@company.com',
-    department: 'Tech',
+    department: 'Finance',
     position: 'Medior',
   },
   {
@@ -966,7 +966,7 @@ export default [
     dateOfBirth: '11/12/1999',
     phone: '+(90) 537 314 55 61 03',
     email: 'ahmet.bozkurt@company.com',
-    department: 'Analytics',
+    department: 'Tech',
     position: 'Medior',
   },
   {
@@ -976,7 +976,7 @@ export default [
     dateOfBirth: '08/05/1999',
     phone: '+(90) 538 783 66 69 90',
     email: 'serkan.demir@company.com',
-    department: 'Tech',
+    department: 'Analytics',
     position: 'Junior',
   },
   {
@@ -986,7 +986,7 @@ export default [
     dateOfBirth: '11/08/1989',
     phone: '+(90) 535 530 40 17 75',
     email: 'gökhan.polat@company.com',
-    department: 'Tech',
+    department: 'HR',
     position: 'Medior',
   },
   {
@@ -996,7 +996,7 @@ export default [
     dateOfBirth: '29/03/2001',
     phone: '+(90) 538 316 06 89 94',
     email: 'buse.tosun@company.com',
-    department: 'Analytics',
+    department: 'Finance',
     position: 'Medior',
   },
 ];

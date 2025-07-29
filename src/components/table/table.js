@@ -2,6 +2,7 @@ import { LitElement, html, css } from 'lit';
 import '../input/input.js';
 import '../pagination/pagination.js';
 import { t } from '../../localization/i18n.js';
+import { iconSearch } from '../svgs/other_icons.js';
 
 class Table extends LitElement {
   static properties = {
@@ -156,18 +157,7 @@ class Table extends LitElement {
             type="text"
             placeholder="${t('search')}"
           />
-          <svg
-            slot="icon"
-            width="24"
-            height="24"
-            fill="none"
-            stroke="#ff6600"
-            stroke-width="2"
-            viewBox="0 0 24 24"
-          >
-            <circle cx="11" cy="11" r="7" />
-            <line x1="16" y1="16" x2="21" y2="21" />
-          </svg>
+          ${iconSearch()}
         </input-component>
       </div>
 

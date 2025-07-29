@@ -51,9 +51,12 @@ describe('Table', () => {
   });
 
   it('search filters table rows', async () => {
-    
     const el = await fixture(html`
-      <table-component .pageSize=${4} .columns=${columns} .data=${data}></table-component>
+      <table-component
+        .pageSize=${4}
+        .columns=${columns}
+        .data=${data}
+      ></table-component>
     `);
     el.searchValue = 'person-2';
 
@@ -67,4 +70,4 @@ describe('Table', () => {
     const rows = el.shadowRoot.querySelectorAll('tbody tr');
     expect(rows[0].textContent).to.include('person-2');
   });
-})  
+});

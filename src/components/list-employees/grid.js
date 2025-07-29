@@ -2,6 +2,7 @@ import { LitElement, html, css } from 'lit';
 import { employeeStore } from '../../store/employee.js';
 import { Router } from '@vaadin/router';
 import { showDialog } from '../_common/dialog/dialog.js';
+import { iconSearch } from '../svgs/other_icons.js';
 
 export class GridComponent extends LitElement {
   static properties = {
@@ -9,6 +10,7 @@ export class GridComponent extends LitElement {
     pagedRows: { state: true },
     pageSize: { type: Number },
     currentPage: { type: Number },
+    searchValue: { type: String }
   };
 
   static styles = css`
@@ -220,6 +222,24 @@ export class GridComponent extends LitElement {
     }
   }
 
+  get filteredData() {
+    if (!this.searchValue) return this.data;
+    const searchValue = this.searchValue.toLowerCase();
+    return this.data.filter(employee => Object.values(employee)
+    .some(value => value.toString().toLowerCase().includes(searchValue)));
+  }
+
+  handleSearch(e) {
+    this.searchValue = e.target.value;
+    this.currentPage = 1;
+    this.#syncPagedRows();
+  }
+
+  #syncPagedRows() {
+    const start = (this.currentPage - 1) * this.pageSize;
+    this.pagedRows = this.filteredData.slice(start, start + this.pageSize);
+  }
+
   #renderEmployee(e) {
     return html`
       <div class="employee-grid">
@@ -269,11 +289,20 @@ export class GridComponent extends LitElement {
 
   render() {
     return html`
+    <input-component .placeholder=${'Search'} .value=${this.searchValue} @onChange=${this.handleSearch}>
+      <input slot='control' 
+      type="text"
+        placeholder="Search..."
+        .value=${this.searchValue || ''}
+        @input=${this.handleSearch}
+      />  
+      ${iconSearch()}
+    </input-component>
       <div class="employee-card-list">
         ${this.pagedRows.map((employee) => this.#renderEmployee(employee))}
       </div>
       <pagination-component
-        .data=${this.data}
+        .data=${this.filteredData}
         .pageSize=${this.pageSize}
         .currentPage=${this.currentPage}
         @onPageChange=${this.handlePageChange}

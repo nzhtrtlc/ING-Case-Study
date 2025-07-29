@@ -24,7 +24,11 @@ describe('Pagination', () => {
   it('disables next button on last page', async () => {
     const data = Array.from({ length: 10 }, (_, i) => i + 1);
     const el = await fixture(html`
-      <pagination-component .data=${data} .pageSize=${5} .currentPage=${2}></pagination-component>
+      <pagination-component
+        .data=${data}
+        .pageSize=${5}
+        .currentPage=${2}
+      ></pagination-component>
     `);
     const btns = el.shadowRoot.querySelectorAll('button');
     const nextBtn = btns[btns.length - 1];

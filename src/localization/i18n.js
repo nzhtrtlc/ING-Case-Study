@@ -25,8 +25,10 @@ export const translations = {
     no: 'No',
     updateEmployeeTitle: 'Update Employee',
     addEmployeeTitle: 'Add Employee',
-    areYouSureYouWantToUpdateThisEmployee: 'Are you sure you want to update this employee?',
-    areYouSureYouWantToAddThisEmployee: 'Are you sure you want to add this employee?',
+    areYouSureYouWantToUpdateThisEmployee:
+      'Are you sure you want to update this employee?',
+    areYouSureYouWantToAddThisEmployee:
+      'Are you sure you want to add this employee?',
     page: 'Page',
   },
   tr: {
@@ -55,8 +57,10 @@ export const translations = {
     no: 'Hayır',
     updateEmployeeTitle: 'Çalışanı Güncelle',
     addEmployeeTitle: 'Çalışan Ekle',
-    areYouSureYouWantToUpdateThisEmployee: 'Bu çalışanı güncellemek istediğinize emin misiniz?',
-    areYouSureYouWantToAddThisEmployee: 'Bu çalışanı eklemek istediğinize emin misiniz?',
+    areYouSureYouWantToUpdateThisEmployee:
+      'Bu çalışanı güncellemek istediğinize emin misiniz?',
+    areYouSureYouWantToAddThisEmployee:
+      'Bu çalışanı eklemek istediğinize emin misiniz?',
     page: 'Sayfa',
   },
 };

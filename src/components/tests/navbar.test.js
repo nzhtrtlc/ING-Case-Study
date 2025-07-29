@@ -18,12 +18,16 @@ describe('Navbar', () => {
   });
 
   it('should display language switcher', async () => {
-    const el = await fixture(html`<navbar-component .showLangDropdown=${true}></navbar-component>`);
+    const el = await fixture(
+      html`<navbar-component .showLangDropdown=${true}></navbar-component>`
+    );
     const langDiv = el.shadowRoot.querySelector('.lang-dropdown');
     expect(langDiv).to.exist;
   });
   it('should hide language switcher', async () => {
-    const el = await fixture(html`<navbar-component .showLangDropdown=${false}></navbar-component>`);
+    const el = await fixture(
+      html`<navbar-component .showLangDropdown=${false}></navbar-component>`
+    );
     const langDiv = el.shadowRoot.querySelector('.lang-dropdown');
     expect(langDiv).to.not.exist;
   });

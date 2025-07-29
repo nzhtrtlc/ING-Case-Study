@@ -1,8 +1,8 @@
 import { LitElement, html, css } from 'lit';
-import '../input/input.js';
-import '../pagination/pagination.js';
-import { t } from '../../localization/i18n.js';
-import { iconSearch } from '../svgs/other_icons.js';
+import '../input/input';
+import '../pagination/pagination';
+import { t } from '../../../localization/i18n';
+import { iconSearch } from '../../svgs/other_icons';
 
 class Table extends LitElement {
   static properties = {

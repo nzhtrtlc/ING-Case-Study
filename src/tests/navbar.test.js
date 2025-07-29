@@ -1,5 +1,5 @@
 import { fixture, expect, html } from '@open-wc/testing';
-import '../components/navbar/navbar.js';
+import '../components/navbar/navbar';
 
 describe('Navbar', () => {
   it('is defined and renders navigation links', async () => {

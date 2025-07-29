@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit';
-import '../table/table.js';
+import '../_common/table/table.js';
 import './grid.js';
 import { employeeStore } from '../../store/employee.js';
 import { appStore } from '../../store/app.js';

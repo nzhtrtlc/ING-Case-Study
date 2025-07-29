@@ -1,5 +1,5 @@
 import { html, LitElement, css } from 'lit';
-import '../../button/button.js';
+import '../button/button.js';
 import { iconClose } from '../../svgs/other_icons.js';
 
 class Dialog extends LitElement {

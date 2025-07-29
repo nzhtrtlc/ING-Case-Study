@@ -1,6 +1,6 @@
 import { LitElement, html, css } from 'lit';
-import { t } from '../../localization/i18n.js';
-import { iconPrev, iconNext } from '../svgs/navigation.js';
+import { t } from '../../../localization/i18n.js';
+import { iconPrev, iconNext } from '../../svgs/navigation.js';
 
 class Pagination extends LitElement {
   static styles = css`

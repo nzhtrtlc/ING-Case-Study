@@ -1,5 +1,5 @@
 import { fixture, expect, html } from '@open-wc/testing';
-import '../components/button/button.js';
+import '../components/_common/button/button';
 
 describe('ButtonComponent', () => {
   it('renders with label', async () => {

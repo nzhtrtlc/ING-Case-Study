@@ -1,7 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
-import '../button/button.js';
-import '../input/input.js';
+import '../_common/button/button.js';
+import '../_common/input/input.js';
 import { employeeStore } from '../../store/employee.js';
 import { DMYtoIso, isoToDMY } from '../../utils/date.js';
 import { Router } from '@vaadin/router';

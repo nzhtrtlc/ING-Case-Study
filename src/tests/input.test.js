@@ -1,5 +1,5 @@
 import { fixture, expect, html, oneEvent } from '@open-wc/testing';
-import '../components/input/input.js';
+import '../components/_common/input/input.js';
 
 describe('InputComponent', () => {
   it('renders input in control slot', async () => {

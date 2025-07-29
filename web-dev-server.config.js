@@ -11,6 +11,8 @@ if (!['dev', 'prod'].includes(mode)) {
   throw new Error(`MODE must be "dev" or "prod", was "${mode}"`);
 }
 
+console.log('mode', mode);
+
 export default {
   rootDir: '.',
   appIndex: 'index.html',

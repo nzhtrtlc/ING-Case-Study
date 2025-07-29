@@ -1,5 +1,5 @@
 import { fixture, expect, html, oneEvent } from '@open-wc/testing';
-import '../components/pagination/pagination.js';
+import '../components/_common/pagination/pagination.js';
 
 describe('Pagination', () => {
   it('renders correct number of page buttons', async () => {

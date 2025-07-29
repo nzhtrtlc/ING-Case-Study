@@ -37,7 +37,7 @@ class Pagination extends LitElement {
       display: none;
     }
 
-    @media (max-width: 576px) {
+    @media (max-width: 575.98px) {
       .page-buttons {
         display: none;
       }

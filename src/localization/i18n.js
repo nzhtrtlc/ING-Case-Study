@@ -27,9 +27,9 @@ export const translations = {
     addEmployeeTitle: 'Add Employee',
     areYouSureYouWantToUpdateThisEmployee: 'Are you sure you want to update this employee?',
     areYouSureYouWantToAddThisEmployee: 'Are you sure you want to add this employee?',
+    page: 'Page',
   },
   tr: {
-    page: 'Sayfa',
     of: '/',
     employees: 'Çalışanlar',
     employeeList: 'Çalışan Listesi',
@@ -57,6 +57,7 @@ export const translations = {
     addEmployeeTitle: 'Çalışan Ekle',
     areYouSureYouWantToUpdateThisEmployee: 'Bu çalışanı güncellemek istediğinize emin misiniz?',
     areYouSureYouWantToAddThisEmployee: 'Bu çalışanı eklemek istediğinize emin misiniz?',
+    page: 'Sayfa',
   },
 };
 

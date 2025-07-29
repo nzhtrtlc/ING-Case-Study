@@ -51,7 +51,7 @@ class ListEmployees extends LitElement {
       pointer-events: none;
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 575.98px) {
       .employee-card-list {
         grid-template-columns: 1fr;
         gap: 1rem;

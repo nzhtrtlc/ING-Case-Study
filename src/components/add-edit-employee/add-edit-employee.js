@@ -58,7 +58,7 @@ class AddEditEmployee extends LitElement {
       flex-shrink: 0;
     }
 
-    @media (max-width: 992px) {
+    @media (max-width: 991.98px) {
       .form {
         grid-template-columns: repeat(2, 1fr);
         gap: 1.5rem;
@@ -66,7 +66,7 @@ class AddEditEmployee extends LitElement {
       }
     }
 
-    @media (max-width: 576px) {
+    @media (max-width: 575.98px) {
       .form {
         grid-template-columns: 1fr;
         gap: 1rem;
@@ -74,7 +74,7 @@ class AddEditEmployee extends LitElement {
       }
 
       button-component {
-        width: 150px;
+        width: 100%;
       }
 
       .actions {

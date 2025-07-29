@@ -1,5 +1,5 @@
 import { fixture, expect, html } from '@open-wc/testing';
-import '../table/table';
+import '../components/table/table.js';
 
 describe('Table', () => {
   let data, columns, PAGE_SIZE, tableElement;

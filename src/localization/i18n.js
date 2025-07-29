@@ -30,6 +30,7 @@ export const translations = {
     areYouSureYouWantToAddThisEmployee:
       'Are you sure you want to add this employee?',
     page: 'Page',
+    noData: 'No data found',
   },
   tr: {
     of: '/',
@@ -62,6 +63,7 @@ export const translations = {
     areYouSureYouWantToAddThisEmployee:
       'Bu çalışanı eklemek istediğinize emin misiniz?',
     page: 'Sayfa',
+    noData: 'Kayıt bulunamadı',
   },
 };
 

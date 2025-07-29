@@ -3,6 +3,7 @@ import { employeeStore } from '../../store/employee.js';
 import { Router } from '@vaadin/router';
 import { showDialog } from '../_common/dialog/dialog.js';
 import { iconSearch } from '../svgs/other_icons.js';
+import { t } from '../../localization/i18n.js';
 
 export class GridComponent extends LitElement {
   static properties = {
@@ -192,14 +193,8 @@ export class GridComponent extends LitElement {
       changed.has('pageSize') ||
       changed.has('currentPage')
     ) {
-      this._syncPagedRows();
+      this.#syncPagedRows();
     }
-  }
-
-  // Slice data according to current page
-  _syncPagedRows() {
-    const start = (this.currentPage - 1) * this.pageSize;
-    this.pagedRows = this.data.slice(start, start + this.pageSize);
   }
 
   handlePageChange(e) {
@@ -226,7 +221,7 @@ export class GridComponent extends LitElement {
     if (!this.searchValue) return this.data;
     const searchValue = this.searchValue.toLowerCase();
     return this.data.filter(employee => Object.values(employee)
-    .some(value => value.toString().toLowerCase().includes(searchValue)));
+      .some(value => value.toString().toLowerCase().includes(searchValue)));
   }
 
   handleSearch(e) {
@@ -299,7 +294,9 @@ export class GridComponent extends LitElement {
       ${iconSearch()}
     </input-component>
       <div class="employee-card-list">
-        ${this.pagedRows.map((employee) => this.#renderEmployee(employee))}
+        ${this.pagedRows.length
+        ? this.pagedRows.map((employee) => this.#renderEmployee(employee))
+        : html`<div class="no-data"> ${t('noData')}</div>`}
       </div>
       <pagination-component
         .data=${this.filteredData}

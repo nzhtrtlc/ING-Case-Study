@@ -95,7 +95,7 @@ class Pagination extends LitElement {
       changed.has('currentPage') ||
       changed.has('pageSize')
     ) {
-      // data veya page değişince dispatch et
+      // dispatch when data or page changes
       this._dispatch();
     }
   }

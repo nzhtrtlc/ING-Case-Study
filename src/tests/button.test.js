@@ -1,4 +1,4 @@
-import { fixture, expect, html, oneEvent } from '@open-wc/testing';
+import { fixture, expect, html } from '@open-wc/testing';
 import '../components/button/button.js';
 
 describe('ButtonComponent', () => {

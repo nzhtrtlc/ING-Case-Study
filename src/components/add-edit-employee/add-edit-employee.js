@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import '../button/button.js';
 import '../input/input.js';
 import { employeeStore } from '../../store/employee.js';
@@ -97,15 +98,12 @@ class AddEditEmployee extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    // URL değişikliklerini dinle
     window.addEventListener('popstate', this.handleUrlChange);
-    // İlk yükleme
     this.#checkEmployeeFromUrl();
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    // Event listener'ı temizle
     window.removeEventListener('popstate', this.handleUrlChange);
   }
 
@@ -244,8 +242,7 @@ class AddEditEmployee extends LitElement {
               slot="control"
               type="date"
               name="dateOfEmployment"
-              placeholder="${t('dateOfEmployment')}"
-              value=${DMYtoIso(this.employee?.dateOfEmployment)}
+              value=${ifDefined(DMYtoIso(this.employee?.dateOfEmployment))}
             />
           </input-component>
           <input-component>
@@ -256,7 +253,7 @@ class AddEditEmployee extends LitElement {
               type="date"
               name="dateOfBirth"
               placeholder="${t('dateOfBirth')}"
-              value=${DMYtoIso(this.employee?.dateOfBirth)}
+              value=${ifDefined(DMYtoIso(this.employee?.dateOfBirth))}
             />
           </input-component>
           <input-component>

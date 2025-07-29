@@ -6,8 +6,8 @@ import { iconSearch } from '../svgs/other_icons.js';
 
 class Table extends LitElement {
   static properties = {
-    data: { type: Array },
     columns: { type: Array },
+    data: { type: Array },
     pageSize: { type: Number },
     currentPage: { type: Number },
     searchValue: { type: String },
@@ -132,7 +132,7 @@ class Table extends LitElement {
   handleSearch(e) {
     this.searchValue = e.detail?.value ?? e.target?.value ?? '';
     this.currentPage = 1;
-    // URL'yi güncelle
+
     const params = new URLSearchParams();
     if (this.searchValue) params.set('search', this.searchValue);
     window.history.replaceState(

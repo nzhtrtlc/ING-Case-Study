@@ -143,21 +143,18 @@ export function showDialog({
   cancelText = 'Cancel',
 } = {}) {
   return new Promise((resolve) => {
-    // Dialog zaten varsa tekrar ekleme
     let dialog = document.querySelector('dialog-component');
     if (!dialog) {
       dialog = document.createElement('dialog-component');
       document.body.appendChild(dialog);
     }
 
-    // Set properties
     dialog.title = title;
     dialog.message = message;
     dialog.confirmText = confirmText;
     dialog.cancelText = cancelText;
     dialog.open = true;
 
-    // Event handlers
     const cleanup = () => {
       dialog.open = false;
       dialog.removeEventListener('dialog-confirm', onConfirm);

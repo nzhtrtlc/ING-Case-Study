@@ -60,7 +60,7 @@ class ListEmployees extends LitElement {
   `;
 
   static properties = {
-    employees: { type: Array },
+    employees: { type: Array, state: true },
     displayMode: { type: String, state: true },
     fadingEmployees: { type: Set, state: true },
   };
@@ -92,12 +92,12 @@ class ListEmployees extends LitElement {
     this.fadingEmployees.add(employee.id);
     this.requestUpdate();
 
-    // Animasyon tamamlandıktan sonra store'dan sil
+    // remove employee from store after animation end.
     setTimeout(() => {
       employeeStore.getState().removeEmployee(employee.id);
       this.fadingEmployees.delete(employee.id);
       this.requestUpdate();
-    }, 300); // CSS transition süresi
+    }, 300);
   }
 
   changeDisplayMode(mode) {

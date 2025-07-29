@@ -134,7 +134,7 @@ export class Navbar extends LitElement {
             class="navbar__logo"
           />
           <span class="navbar__brand">ING</span>
-        </div>
+        </a>
         <ul class="navbar__menu">
           <li>
             <a href="/employees" class="navbar__link active">
@@ -149,32 +149,33 @@ export class Navbar extends LitElement {
             </a>
           </li>
           <li style="position:relative;">
-  <div
-    class="navbar__lang"
-    aria-label="Change Language"
-    @click=${this.toggleLangDropdown}
-    tabindex="0"
-    aria-haspopup="listbox"
-    aria-expanded="${this.showLangDropdown}"
-  >
-    ${this.getLang() === 'tr' ? flagTR() : flagEN()}
-  </div>
-  ${
-    this.showLangDropdown
-      ? html`
-          <div class="lang-dropdown" @click=${(e) => e.stopPropagation()}>
-            ${this.getLang() === 'tr'
-              ? html`<div @click=${() => this.setLang('en')}>
-                  ${flagEN()} English
-                </div>`
-              : html`<div @click=${() => this.setLang('tr')}>
-                  ${flagTR()} Türkçe
-                </div>`}
-          </div>
-        `
-      : ''
-  }
-</li>
+            <div
+              class="navbar__lang"
+              aria-label="Change Language"
+              @click=${this.toggleLangDropdown}
+              tabindex="0"
+              aria-haspopup="true"
+              aria-expanded="${this.showLangDropdown}"
+            >
+              ${this.getLang() === 'tr' ? flagTR() : flagEN()}
+            </div>
+            ${this.showLangDropdown
+              ? html`
+                  <div
+                    class="lang-dropdown"
+                    @click=${(e) => e.stopPropagation()}
+                  >
+                    ${this.getLang() === 'tr'
+                      ? html`<div @click=${() => this.setLang('en')}>
+                          ${flagEN()} English
+                        </div>`
+                      : html`<div @click=${() => this.setLang('tr')}>
+                          ${flagTR()} Türkçe
+                        </div>`}
+                  </div>
+                `
+              : ''}
+          </li>
         </ul>
       </nav>
     `;

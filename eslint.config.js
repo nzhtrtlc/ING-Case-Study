@@ -1,6 +1,7 @@
 import { defineConfig } from 'eslint/config';
 import babelParser from '@babel/eslint-parser';
 import litPlugin from 'eslint-plugin-lit';
+import globals from 'globals';
 
 export default defineConfig([
   {
@@ -30,6 +31,7 @@ export default defineConfig([
         after: 'readonly',
         beforeEach: 'readonly',
         afterEach: 'readonly',
+        ...globals.browser,
       },
     },
     plugins: {
@@ -49,7 +51,6 @@ export default defineConfig([
         require: 'readonly',
         process: 'readonly',
         __dirname: 'readonly',
-        customElements: 'readonly',
       },
       parserOptions: {
         sourceType: 'module',

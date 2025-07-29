@@ -21,7 +21,6 @@ export const flagEN = (size = 24) => html`
   </svg>
 `;
 
-// Turkey (TR) flag
 export const flagTR = (size = 24) => html`
   <svg
     width="${size}"

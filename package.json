@@ -44,6 +44,7 @@
     "@open-wc/testing": "^4.0.0",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-replace": "^5.0.7",
+    "@rollup/plugin-terser": "^0.4.4",
     "@web/dev-server": "^0.1.31",
     "@web/dev-server-legacy": "^1.0.0",
     "@web/test-runner": "^0.15.0",

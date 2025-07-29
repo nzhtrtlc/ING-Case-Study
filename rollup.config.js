@@ -5,22 +5,26 @@
  */
 
 import summary from 'rollup-plugin-summary';
-import { terser } from 'rollup-plugin-terser';
+import terser from '@rollup/plugin-terser';
 import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 
 export default {
   input: 'src/main.js',
   output: {
-    file: 'main.bundled.js',
+    dir: 'dist',
     format: 'esm',
+    entryFileNames: 'main.dist.js',
+    chunkFileNames: '[hash].js',
+    assetFileNames: '[hash].[ext]',
+    sourcemap: true,
+    inlineDynamicImports: true,
   },
   onwarn(warning) {
     if (warning.code !== 'THIS_IS_UNDEFINED') {
       console.error(`(!) ${warning.message}`);
     }
   },
-  publicPath: '/public',
   plugins: [
     replace({ preventAssignment: false, 'Reflect.decorate': 'undefined' }),
     resolve(),

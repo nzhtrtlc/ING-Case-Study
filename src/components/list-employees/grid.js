@@ -11,7 +11,7 @@ export class GridComponent extends LitElement {
     pagedRows: { state: true },
     pageSize: { type: Number },
     currentPage: { type: Number },
-    searchValue: { type: String }
+    searchValue: { type: String },
   };
 
   static styles = css`
@@ -220,8 +220,11 @@ export class GridComponent extends LitElement {
   get filteredData() {
     if (!this.searchValue) return this.data;
     const searchValue = this.searchValue.toLowerCase();
-    return this.data.filter(employee => Object.values(employee)
-      .some(value => value.toString().toLowerCase().includes(searchValue)));
+    return this.data.filter((employee) =>
+      Object.values(employee).some((value) =>
+        value.toString().toLowerCase().includes(searchValue)
+      )
+    );
   }
 
   handleSearch(e) {
@@ -284,19 +287,24 @@ export class GridComponent extends LitElement {
 
   render() {
     return html`
-    <input-component .placeholder=${'Search'} .value=${this.searchValue} @onChange=${this.handleSearch}>
-      <input slot='control' 
-      type="text"
-        placeholder="Search..."
-        .value=${this.searchValue || ''}
-        @input=${this.handleSearch}
-      />  
-      ${iconSearch()}
-    </input-component>
+      <input-component
+        .placeholder=${'Search'}
+        .value=${this.searchValue}
+        @onChange=${this.handleSearch}
+      >
+        <input
+          slot="control"
+          type="text"
+          placeholder="Search..."
+          .value=${this.searchValue || ''}
+          @input=${this.handleSearch}
+        />
+        ${iconSearch()}
+      </input-component>
       <div class="employee-card-list">
         ${this.pagedRows.length
-        ? this.pagedRows.map((employee) => this.#renderEmployee(employee))
-        : html`<div class="no-data"> ${t('noData')}</div>`}
+          ? this.pagedRows.map((employee) => this.#renderEmployee(employee))
+          : html`<div class="no-data">${t('noData')}</div>`}
       </div>
       <pagination-component
         .data=${this.filteredData}

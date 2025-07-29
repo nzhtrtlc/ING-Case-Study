@@ -21,7 +21,7 @@ describe('GridComponent', () => {
     const el = await fixture(html`
       <grid-component .data=${data} .pageSize=${2}></grid-component>
     `);
-    
+
     // first page
     let cards = el.shadowRoot.querySelectorAll('.employee-grid');
     expect(cards.length).to.equal(2);
@@ -35,7 +35,11 @@ describe('GridComponent', () => {
 
   it('filters cards by search', async () => {
     const el = await fixture(html`
-      <grid-component .data=${data} .pageSize=${4} .searchValue=${'john'}></grid-component>
+      <grid-component
+        .data=${data}
+        .pageSize=${4}
+        .searchValue=${'john'}
+      ></grid-component>
     `);
     const cards = el.shadowRoot.querySelectorAll('.employee-grid');
 
@@ -45,10 +49,24 @@ describe('GridComponent', () => {
 
   it('shows no data message when filtered empty', async () => {
     const el = await fixture(html`
-      <grid-component .data=${data} .pageSize=${4} .searchValue=${'nonexistent'}></grid-component>
+      <grid-component
+        .data=${data}
+        .pageSize=${4}
+        .searchValue=${'nonexistent'}
+      ></grid-component>
     `);
     const cards = el.shadowRoot.querySelectorAll('.employee-grid');
     expect(cards.length).to.equal(0);
     expect(el.shadowRoot.textContent.toLowerCase()).to.include('no data found');
+  });
+
+  it('renders edit and delete buttons for each card', async () => {
+    const el = await fixture(html`
+      <grid-component .data=${data} .pageSize=${4}></grid-component>
+    `);
+    const editBtns = el.shadowRoot.querySelectorAll('.edit-btn');
+    const deleteBtns = el.shadowRoot.querySelectorAll('.delete-btn');
+    expect(editBtns.length).to.equal(4);
+    expect(deleteBtns.length).to.equal(4);
   });
 });

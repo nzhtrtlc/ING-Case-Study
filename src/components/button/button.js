@@ -28,6 +28,7 @@ class Button extends LitElement {
     variant: { type: String },
     type: { type: String },
     name: { type: String },
+    buttonProps: { type: Object },
   };
 
   render() {
